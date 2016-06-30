@@ -54,3 +54,7 @@ fabric.properties
 *.jar
 *.war
 *.ear
+
+# Gradle build-folder
+build
+.gradle

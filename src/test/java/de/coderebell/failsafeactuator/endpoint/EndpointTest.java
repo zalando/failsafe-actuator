@@ -10,9 +10,9 @@
  */
 package de.coderebell.failsafeactuator.endpoint;
 
-import de.coderebell.failsafeactuator.CircuitBreakerRegistry;
 import de.coderebell.failsafeactuator.FailsafeSampleApp;
 import de.coderebell.failsafeactuator.endpoint.domain.CircuitBreakerState;
+import de.coderebell.failsafeactuator.service.CircuitBreakerFactory;
 import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,25 +43,18 @@ public class EndpointTest {
 
     private RestTemplate restTemplate = new TestRestTemplate();
 
-
     @Autowired
-    private CircuitBreakerRegistry registry;
+    private CircuitBreakerFactory factory;
 
     @Test
     public void endpointTest() {
-        final CircuitBreaker breaker = new CircuitBreaker();
-        registry.registerCircuitBreaker(breaker, BREAKER_NAME);
-
+        final CircuitBreaker breaker = factory.createCircuitBreaker(BREAKER_NAME);
         CircuitBreakerState state = fetchCircuitBreaker();
-        System.out.println(state.toString());
-        System.out.println(breaker.toString());
         assertTrue(state.isClosed());
         assertEquals(BREAKER_NAME, state.getName());
 
         breaker.open();
         state = fetchCircuitBreaker();
-        System.out.println(state.toString());
-        System.out.println(breaker.toString());
         assertFalse(state.isClosed());
         assertEquals(BREAKER_NAME, state.getName());
     }

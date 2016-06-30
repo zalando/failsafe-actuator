@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MALPI/failsafe-actuator.svg?branch=master)](https://travis-ci.org/MALPI/failsafe-actuator)
+
 # Failsafe actuator
 
 This project should provide a simple monitoring interface for spring boot applications which are using [failsafe](https://github.com/jhalterman/failsafe) . 
@@ -12,7 +14,7 @@ Add example here.....
 ## How to build:
 
 ```
-./gradlew build
+./gradle build
 ```
 
 

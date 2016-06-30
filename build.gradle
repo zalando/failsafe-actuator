@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE") {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE") {
             exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
         }
     }
@@ -13,8 +13,6 @@ plugins {
     id "java"
     id "idea"
 }
-
-apply plugin: 'spring-boot'
 
 group = 'de.coderebell.failsafe-actuator'
 
@@ -33,16 +31,12 @@ dependencies {
     )
     testCompile(
             'org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE',
-            "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE",
             'junit:junit:4.12'
     )
 }
 
 test {
-    systemProperties System.properties
-}
-
-bootRun {
     systemProperties System.properties
 }
 

@@ -43,7 +43,6 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
 
     @Override
     public List<CircuitBreakerState> invoke() {
-        System.out.println("INVOKE!");
         final Map<String, CircuitBreaker> breakerMap = this.circuitBreakerRegistry.getConcurrentBreakerMap();
         final List<CircuitBreakerState> breakerStates = new ArrayList<CircuitBreakerState>();
 
@@ -54,7 +53,6 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
                 //Memorize unreferenced breakers which need to be removed later on
                 breakersToRemove.add(identifier);
             } else {
-                System.out.println("Breaker in invoke" + breaker.toString());
                 final CircuitBreakerState state = new CircuitBreakerState(identifier, breaker.isClosed());
                 breakerStates.add(state);
             }

@@ -44,6 +44,13 @@ public class CircuitBreakerRegistryTest {
         registry.registerCircuitBreaker(new CircuitBreaker(), "");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void avoidReplacingRegisteredCircuitBreakers() {
+        registry.registerCircuitBreaker(new CircuitBreaker(), "ONE");
+        registry.registerCircuitBreaker(new CircuitBreaker(), "TWO");
+        registry.registerCircuitBreaker(new CircuitBreaker(), "ONE");
+    }
+
     public void putBreakerOkTest() {
         final CircuitBreaker breakerUt = new CircuitBreaker();
         registry.registerCircuitBreaker(breakerUt, ID);

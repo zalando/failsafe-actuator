@@ -12,6 +12,7 @@ package de.coderebell.failsafeactuator;
 
 import net.jodah.failsafe.CircuitBreaker;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,15 +36,11 @@ public class CircuitBreakerRegistry {
      * @param name    Which is used to identify the CircuitBreaker
      */
     public void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name for circuitbreaker needs to be set");
-        }
+        Assert.hasText(name, "Name for circuitbreaker needs to be set");
+        Assert.notNull(breaker, "Circuitbreaker to add, can't be null");
 
-        if (breaker == null) {
-            throw new IllegalArgumentException("Circuitbreaker to add, can't be null");
-        }
-
-        concurrentBreakerMap.put(name, breaker);
+        CircuitBreaker replaced = concurrentBreakerMap.put(name, breaker);
+        Assert.isNull(replaced, "There was an Circuit-Breaker registered already with name : " + name);
     }
 
     /**

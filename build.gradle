@@ -2,6 +2,8 @@ plugins {
     id "java"
     id "idea"
     id "com.github.hierynomus.license" version "0.13.1"
+    id 'net.saliman.cobertura' version '2.3.1'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 group = 'de.coderebell.failsafe-actuator'
@@ -10,6 +12,7 @@ def jdkVersion = 1.6
 sourceCompatibility = jdkVersion
 targetCompatibility = jdkVersion
 
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 repositories {
     mavenCentral()

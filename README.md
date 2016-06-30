@@ -9,5 +9,13 @@ By using this actuator, the state of your breakpoints (open/closed) will be expo
 ## How to use:
 Add example here.....
 
+## How to build:
+
+```
+./gradlew build
+```
+
+
+
 
 

@@ -6,7 +6,7 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
-group = 'de.coderebell.failsafe-actuator'
+group = 'org.zalando'
 
 def jdkVersion = 1.6
 sourceCompatibility = jdkVersion

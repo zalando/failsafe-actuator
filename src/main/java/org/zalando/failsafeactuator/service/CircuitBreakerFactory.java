@@ -14,7 +14,7 @@ import net.jodah.failsafe.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /**
@@ -22,7 +22,7 @@ import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
  * registered in SpringContext and can therefore be exposed
  * by {@link FailsafeEndpoint}.
  */
-@Service
+@Component
 public class CircuitBreakerFactory {
 
     @Autowired

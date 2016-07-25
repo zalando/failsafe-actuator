@@ -1,1 +1,4 @@
-org.springframework.boot.actuate.autoconfigure.ManagementContextConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.zalando.failsafeactuator.endpoint.FailsafeEndpoint,\
+org.zalando.failsafeactuator.service.CircuitBreakerRegistry,\
+org.zalando.failsafeactuator.service.CircuitBreakerFactory

@@ -1,6 +1,8 @@
 plugins {
     id "java"
+    id "maven"
     id "idea"
+    id "signing"
     id "com.github.hierynomus.license" version "0.13.1"
     id 'net.saliman.cobertura' version '2.3.1'
     id 'com.github.kt3k.coveralls' version '2.6.3'
@@ -40,10 +42,69 @@ jar {
         attributes("Implementation-Title": "failsafe-actuator",
                 "Implementation-Version": version)
     }
-
-    from sourceSets.main.allSource
-
 }
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name "failsafe-actuator"
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Failsafe-Actuator provides an out of the box endpoint for Failsafe'
+                url 'https://github.com/zalando-incubator/failsafe-actuator'
+
+                scm {
+                    url 'https://github.com/zalando-incubator/failsafe-actuator'
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'malpi'
+                        name 'Malte Pickhan'
+                        email 'malte.pickhan@zalando.de'
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'

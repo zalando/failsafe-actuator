@@ -3,25 +3,34 @@
 
 # Failsafe actuator
 
-This project should provide a simple monitoring interface for spring boot applications which are using [failsafe](https://github.com/jhalterman/failsafe) . 
+This project provides a simple monitoring interface for spring boot applications which are using the [failsafe](https://github.com/jhalterman/failsafe) library. 
+By using this library, the state of your [Circuit Breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (open/closed) will be exposed to your spring applications endpoint.
 
-By using this actuator, the state of your breakpoints (open/closed) will be exposed to your applications monitoring endpoint.
+Having the possibility to monitor the state of a Circuit Breakers is essential for live applications, since you can directly see if one the third parties
+your app is relying on, currently is unavailable.
 
-The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
+## Dependencies:
 
-The generated output will look like the following:
-
-```
-CircuitBreakerState{name='testBreaker1', isClosed=true}
-CircuitBreakerState{name='testBreaker2', isClosed=false}
-```
+* Java 8
+* Any build tool using Maven Central, or direct Download
+* [Spring Boot](http://projects.spring.io/spring-boot/) Auto Configuration
+* Usage of [failsafe](https://github.com/jhalterman/failsafe)
 
 ## How to use:
 
 In order to use this endpoint, just add the following dependency to your project:
 
 ```
-TODO ADD dependency here
+Gradle:
+"org.zalando:failsafe-actuator:$failsafe-actuator.version"
+
+Maven:
+
+<dependency>
+    <groupId>org.zalando</groupId>
+    <artifactId>failsafe-actuator</artifactId>
+    <version>${failsafe-actuator.version}</version>
+</dependency>
 ```
 
 After you did this, Autowire the `CircuitBreakerFactory` to your Bean and call the method `createCircuitBreaker` in order to create a new **Circuit Breaker**.
@@ -44,7 +53,15 @@ public class MyBean {
 }
 ```
 
-That's all.
+The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
+
+The generated output will look like the following:
+
+```
+CircuitBreakerState{name='testBreaker1', isClosed=true}
+CircuitBreakerState{name='testBreaker2', isClosed=false}
+```
+
 ## How to build:
 
 ```
@@ -53,7 +70,7 @@ gradle build
 
 ## Contribution
 
-If you find an issue or have a proposal for improvement/enhancement open an issue.
+If you find an issue or have a proposal for improvement/enhancement open an issue in this repositories [Issue Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues).
 
 Pull requests are always welcome!
 

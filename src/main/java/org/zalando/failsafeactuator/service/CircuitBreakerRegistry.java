@@ -14,6 +14,7 @@ import net.jodah.failsafe.CircuitBreaker;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class CircuitBreakerRegistry {
 
-    private static final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+    private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
 
     /**
      * Will put the {@link CircuitBreaker} into the registry. There is no check which avoids overwriting
@@ -52,4 +53,8 @@ public class CircuitBreakerRegistry {
         return this.concurrentBreakerMap;
     }
 
+    @PreDestroy
+    public void destroy() throws Exception {
+        concurrentBreakerMap.clear();
+    }
 }

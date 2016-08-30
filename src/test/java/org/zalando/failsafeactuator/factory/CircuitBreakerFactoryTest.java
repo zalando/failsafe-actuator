@@ -37,11 +37,4 @@ public class CircuitBreakerFactoryTest {
 
         Assert.assertNotEquals(breakerOne, breakerTwo);
     }
-
-    @Test
-    public void registerSecondBreakerWithSameNameTest() {
-        //Shouldn't throw exception
-        final CircuitBreaker breakerOne = factory.createCircuitBreaker("ONE");
-    }
-
 }

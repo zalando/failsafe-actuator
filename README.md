@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/MALPI/failsafe-actuator.svg?branch=master)](https://travis-ci.org/MALPI/failsafe-actuator)
-[![Coverage Status](https://coveralls.io/repos/github/MALPI/failsafe-actuator/badge.svg?branch=master)](https://coveralls.io/github/MALPI/failsafe-actuator?branch=master)
+[![Build Status](https://travis-ci.org/zalando-incubator/failsafe-actuator.svg?branch=master)](https://travis-ci.org/zalando-incubator/failsafe-actuator)
+[![Coverage Status](https://coveralls.io/repos/github/zalando-incubator/failsafe-actuator/badge.svg?branch=master)](https://coveralls.io/github/zalando-incubator/failsafe-actuator?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zalando/failsafe-actuator.svg)](https://maven-badges.herokuapp.com/maven-central/org.zalando/failsafe-actuator)
 
 # Failsafe actuator

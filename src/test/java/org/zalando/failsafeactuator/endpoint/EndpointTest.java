@@ -11,6 +11,7 @@
 package org.zalando.failsafeactuator.endpoint;
 
 import net.jodah.failsafe.CircuitBreaker;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import org.zalando.failsafeactuator.FailsafeSampleApp;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
 import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
+import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 import java.util.Arrays;
 
@@ -47,6 +49,14 @@ public class EndpointTest {
 
     @Autowired
     private CircuitBreakerFactory factory;
+
+    @Autowired
+    private CircuitBreakerRegistry registry;
+
+    @Before
+    public void setup() {
+        registry.getConcurrentBreakerMap().clear();
+    }
 
     @Test
     public void endpointTest() {

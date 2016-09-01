@@ -36,14 +36,14 @@ import static org.junit.Assert.assertTrue;
 @TestPropertySource(value = "classpath:application-test.properties")
 @SpringApplicationConfiguration(classes = FailsafeSampleApp.class)
 @ComponentScan(value = "org.zalando.failsafeactuator")
-@WebIntegrationTest
+@WebIntegrationTest(randomPort = true)
 public class EndpointTest {
 
     private static final String FAILSAFE_URL = "http://localhost:8080/failsafe";
 
     private static final String BREAKER_NAME = "testBreaker";
 
-    private RestTemplate restTemplate = new TestRestTemplate();
+    private final RestTemplate restTemplate = new TestRestTemplate();
 
     @Autowired
     private CircuitBreakerFactory factory;

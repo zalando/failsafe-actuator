@@ -22,14 +22,14 @@ repositories {
 
 dependencies {
     compile('net.jodah:failsafe:0.8.1',
-            'org.springframework.boot:spring-boot-starter-actuator:1.3.5.RELEASE'
+            'org.springframework.boot:spring-boot-starter-actuator:1.5.1.RELEASE'
     )
 
     compileOnly('org.projectlombok:lombok:1.16.12')
     
     testCompile(
-            'org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE',
-            "org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE",
+            'org.springframework.boot:spring-boot-starter-test:1.5.1.RELEASE',
+            "org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE",
             'junit:junit:4.12'
     )
 }

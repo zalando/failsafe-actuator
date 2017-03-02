@@ -1,4 +1,4 @@
 language: java
 
 after_success:
-  - gradle cobertura coveralls
+  - gradlew cobertura coveralls

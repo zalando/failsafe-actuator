@@ -57,7 +57,3 @@ fabric.properties
 
 # Gradle build-folder
 build
-.gradle
-/gradlew
-/gradlew.bat
-/gradle/

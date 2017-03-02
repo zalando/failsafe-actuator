@@ -31,7 +31,7 @@ public class CircuitBreakerState {
 
   private String name;
 
-  private boolean isClosed;
+  private boolean closed;
 
-  private boolean isOpen;
+  private boolean open;
 }

@@ -37,7 +37,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:application-test.properties")
+@TestPropertySource(value = "classpath:application.properties")
 @ComponentScan(value = "org.zalando.failsafeactuator")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointTest {

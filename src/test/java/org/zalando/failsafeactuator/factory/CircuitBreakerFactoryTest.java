@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:application-test.properties")
+@TestPropertySource(value = "classpath:application.properties")
 @SpringBootTest
 public class CircuitBreakerFactoryTest {
 

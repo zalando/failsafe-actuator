@@ -21,16 +21,18 @@ your app is relying on, currently is unavailable.
 
 In order to use this endpoint, just add the following dependency to your project:
 
+
+**Gradle:**
 ```
-Gradle:
-"org.zalando:failsafe-actuator:$failsafe-actuator.version"
+compile("org.zalando:failsafe-actuator:0.2.0")
+```
 
-Maven:
-
+**Maven:**
+```
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>${failsafe-actuator.version}</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 

@@ -56,7 +56,8 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
         //Memorize unreferenced breakers which need to be removed later on
         breakersToRemove.add(identifier);
       } else {
-        final CircuitBreakerState state = new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen());
+        final CircuitBreakerState state = new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen(), breaker.getState().equals(
+                CircuitBreaker.State.HALF_OPEN));
         breakerStates.add(state);
       }
     }

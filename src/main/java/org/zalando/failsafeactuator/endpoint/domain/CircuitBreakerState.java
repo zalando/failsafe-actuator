@@ -34,4 +34,6 @@ public class CircuitBreakerState {
   private boolean closed;
 
   private boolean open;
+
+  private boolean halfOpen;
 }

@@ -68,13 +68,26 @@ public class EndpointTest {
     final CircuitBreaker breaker = factory.createCircuitBreaker(BREAKER_NAME);
     CircuitBreakerState state = fetchCircuitBreaker();
     assertTrue(state.isClosed());
+    assertFalse(state.isOpen());
+    assertFalse(state.isHalfOpen());
     assertEquals(BREAKER_NAME, state.getName());
 
     breaker.open();
     state = fetchCircuitBreaker();
     assertFalse(state.isClosed());
+    assertTrue(state.isOpen());
+    assertFalse(state.isHalfOpen());
     assertEquals(BREAKER_NAME, state.getName());
+
+    breaker.halfOpen();
+    state = fetchCircuitBreaker();
+    assertFalse(state.isClosed());
+    assertFalse(state.isOpen());
+    assertTrue(state.isHalfOpen());
+    assertEquals(BREAKER_NAME, state.getName());
+
   }
+
 
   private CircuitBreakerState fetchCircuitBreaker() {
     final ResponseEntity<CircuitBreakerState[]> result = restTemplate.getForEntity(String.format(FAILSAFE_URL, port), CircuitBreakerState[].class);

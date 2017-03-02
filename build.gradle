@@ -26,7 +26,7 @@ dependencies {
     )
 
     compileOnly('org.projectlombok:lombok:1.16.12')
-    
+
     testCompile(
             'org.springframework.boot:spring-boot-starter-test:1.5.1.RELEASE',
             "org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE",
@@ -39,7 +39,7 @@ test {
 }
 
 jar {
-    baseName="failsafe-actuator"
+    baseName = "failsafe-actuator"
 
     manifest {
         attributes("Implementation-Title": "failsafe-actuator",
@@ -71,12 +71,15 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
+            def userName = hasProperty('ossrhUsername') ? blahUser : System.getenv('ossrhUsername')
+            def password = hasProperty('ossrhPassword') ? blahPwd : System.getenv('ossrhPassword')
+
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: userName, password: password)
             }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: userName, password: password)
             }
 
             pom.project {

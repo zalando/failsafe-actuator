@@ -10,47 +10,27 @@
  */
 package org.zalando.failsafeactuator.endpoint.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 /**
  * Represents the state and identifier of an {@link net.jodah.failsafe.CircuitBreaker}.
  *
  * @author mpickhan on 29.06.16.
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CircuitBreakerState {
 
-    private String name;
+  private String name;
 
-    private boolean isClosed;
+  private boolean closed;
 
-    public CircuitBreakerState() {
+  private boolean open;
 
-    }
-
-    public CircuitBreakerState(final String name, final boolean isClosed) {
-        this.name = name;
-        this.isClosed = isClosed;
-    }
-
-    public boolean isClosed() {
-        return this.isClosed;
-    }
-
-    public void setClosed(final boolean closed) {
-        isClosed = closed;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "CircuitBreakerState{" +
-                "name='" + name + '\'' +
-                ", isClosed=" + isClosed +
-                '}';
-    }
+  private boolean halfOpen;
 }

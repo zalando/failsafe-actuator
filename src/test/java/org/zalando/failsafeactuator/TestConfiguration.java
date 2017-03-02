@@ -19,11 +19,11 @@ import javax.annotation.PostConstruct;
 @Component
 public class TestConfiguration {
 
-    @Autowired
-    private CircuitBreakerFactory factory;
+  @Autowired
+  private CircuitBreakerFactory factory;
 
-    @PostConstruct
-    public void init() {
-        factory.createCircuitBreaker("Breaker");
-    }
+  @PostConstruct
+  public void init() {
+    factory.createCircuitBreaker("Breaker");
+  }
 }

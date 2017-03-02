@@ -11,12 +11,14 @@
 package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.PreDestroy;
 
 /**
  * Registry which holds a reference to registered circuit breakers.
@@ -26,35 +28,34 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class CircuitBreakerRegistry {
 
-    private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+  private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
 
-    /**
-     * Will put the {@link CircuitBreaker} into the registry. There is no check which avoids overwriting
-     * of identifiers. Therefore be sure that your identifiers are unique, or you want to overwrite the
-     * current {@link CircuitBreaker} which is registered with this identifier.
-     *
-     * @param breaker Which should be added
-     * @param name    Which is used to identify the CircuitBreaker
-     */
-    void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
-        Assert.hasText(name, "Name for circuitbreaker needs to be set");
-        Assert.notNull(breaker, "Circuitbreaker to add, can't be null");
+  /**
+   * Will put the {@link CircuitBreaker} into the registry. There is no check which avoids overwriting of identifiers. Therefore be sure that your identifiers
+   * are unique, or you want to overwrite the current {@link CircuitBreaker} which is registered with this identifier.
+   *
+   * @param breaker Which should be added
+   * @param name Which is used to identify the CircuitBreaker
+   */
+  void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
+    Assert.hasText(name, "Name for circuitbreaker needs to be set");
+    Assert.notNull(breaker, "Circuitbreaker to add, can't be null");
 
-        final CircuitBreaker replaced = concurrentBreakerMap.put(name, breaker);
-        Assert.isNull(replaced, "There was an Circuit-Breaker registered already with name : " + name);
-    }
+    final CircuitBreaker replaced = concurrentBreakerMap.put(name, breaker);
+    Assert.isNull(replaced, "There was an Circuit-Breaker registered already with name : " + name);
+  }
 
-    /**
-     * Returns the {@link Map} with registered circuit breakers.
-     *
-     * @return
-     */
-    public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
-        return this.concurrentBreakerMap;
-    }
+  /**
+   * Returns the {@link Map} with registered circuit breakers.
+   *
+   * @return
+   */
+  public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
+    return this.concurrentBreakerMap;
+  }
 
-    @PreDestroy
-    public void destroy() throws Exception {
-        concurrentBreakerMap.clear();
-    }
+  @PreDestroy
+  public void destroy() throws Exception {
+    concurrentBreakerMap.clear();
+  }
 }

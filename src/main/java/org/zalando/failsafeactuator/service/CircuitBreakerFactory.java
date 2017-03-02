@@ -11,37 +11,31 @@
 package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
-/**
- * Factory Class to create {@link CircuitBreaker}'s which are
- * registered in SpringContext and can therefore be exposed
- * by {@link FailsafeEndpoint}.
- */
+/** Factory Class to create {@link CircuitBreaker}'s which are registered in SpringContext and can therefore be exposed by {@link FailsafeEndpoint}. */
 @Component
 public class CircuitBreakerFactory {
 
-    @Autowired
-    private CircuitBreakerRegistry registry;
+  @Autowired
+  private CircuitBreakerRegistry registry;
 
-    /**
-     * Creates a new {@link CircuitBreaker} which
-     * can be used in regular way and is registered in the
-     * SpringContext.
-     *
-     * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
-     * @return new Instance of a {@link CircuitBreaker}
-     */
-    @Bean
-    @Scope(scopeName = "prototype")
-    public CircuitBreaker createCircuitBreaker(final String identifier) {
-        final CircuitBreaker breaker = new CircuitBreaker();
-        registry.registerCircuitBreaker(breaker, identifier);
-        return breaker;
-    }
+  /**
+   * Creates a new {@link CircuitBreaker} which can be used in regular way and is registered in the SpringContext.
+   *
+   * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
+   * @return new Instance of a {@link CircuitBreaker}
+   */
+  @Bean
+  @Scope(scopeName = "prototype")
+  public CircuitBreaker createCircuitBreaker(final String identifier) {
+    final CircuitBreaker breaker = new CircuitBreaker();
+    registry.registerCircuitBreaker(breaker, identifier);
+    return breaker;
+  }
 }
-

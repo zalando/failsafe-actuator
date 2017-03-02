@@ -11,30 +11,30 @@
 package org.zalando.failsafeactuator.factory;
 
 import net.jodah.failsafe.CircuitBreaker;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.zalando.failsafeactuator.FailsafeSampleApp;
 import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:application-test.properties")
-@SpringApplicationConfiguration(classes = FailsafeSampleApp.class)
+@TestPropertySource(value = "classpath:application.properties")
+@SpringBootTest
 public class CircuitBreakerFactoryTest {
 
-    @Autowired
-    private CircuitBreakerFactory factory;
+  @Autowired
+  private CircuitBreakerFactory factory;
 
-    @Test
-    public void instanceUnequalTest() {
-        final CircuitBreaker breakerOne = factory.createCircuitBreaker("ONE");
+  @Test
+  public void instanceUnequalTest() {
+    final CircuitBreaker breakerOne = factory.createCircuitBreaker("ONE");
 
-        final CircuitBreaker breakerTwo = factory.createCircuitBreaker("TWO");
+    final CircuitBreaker breakerTwo = factory.createCircuitBreaker("TWO");
 
-        Assert.assertNotEquals(breakerOne, breakerTwo);
-    }
+    Assert.assertNotEquals(breakerOne, breakerTwo);
+  }
 }

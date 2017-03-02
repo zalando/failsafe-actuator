@@ -9,7 +9,7 @@
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
-
+.gradletasknamecache
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
@@ -52,12 +52,10 @@ fabric.properties
 
 # Package Files #
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.war
 *.ear
 
 # Gradle build-folder
 build
 .gradle
-/gradlew
-/gradlew.bat
-/gradle/

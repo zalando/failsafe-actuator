@@ -12,9 +12,8 @@ package org.zalando.failsafeactuator.endpoint;
 
 import net.jodah.failsafe.CircuitBreaker;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
@@ -29,13 +28,12 @@ import java.util.Map;
  *
  * @author mpickhan on 29.06.16.
  */
-@Component
+@ConfigurationProperties(prefix = "endpoints.failsafe")
 public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>> {
 
   private static final String ENDPOINT_ID = "failsafe";
   private final CircuitBreakerRegistry circuitBreakerRegistry;
 
-  @Autowired
   public FailsafeEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry) {
     super(ENDPOINT_ID);
     this.circuitBreakerRegistry = circuitBreakerRegistry;
@@ -53,8 +51,8 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
         //Memorize unreferenced breakers which need to be removed later on
         breakersToRemove.add(identifier);
       } else {
-        final CircuitBreakerState state = new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen(), breaker.getState().equals(
-                CircuitBreaker.State.HALF_OPEN));
+        final CircuitBreakerState state =
+            new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen(), breaker.getState().equals(CircuitBreaker.State.HALF_OPEN));
         breakerStates.add(state);
       }
     }

@@ -25,7 +25,6 @@ import javax.annotation.PreDestroy;
  *
  * @author mpickhan on 29.06.16.
  */
-@Component
 public class CircuitBreakerRegistry {
 
   private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();

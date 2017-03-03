@@ -12,18 +12,18 @@ package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /** Factory Class to create {@link CircuitBreaker}'s which are registered in SpringContext and can therefore be exposed by {@link FailsafeEndpoint}. */
-@Component
 public class CircuitBreakerFactory {
 
-  @Autowired
   private CircuitBreakerRegistry registry;
+
+  public CircuitBreakerFactory(final CircuitBreakerRegistry registry) {
+    this.registry = registry;
+  }
 
   /**
    * Creates a new {@link CircuitBreaker} which can be used in regular way and is registered in the SpringContext.

@@ -12,7 +12,6 @@ package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
 
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -42,6 +41,29 @@ public class CircuitBreakerRegistry {
 
     final CircuitBreaker replaced = concurrentBreakerMap.put(name, breaker);
     Assert.isNull(replaced, "There was an Circuit-Breaker registered already with name : " + name);
+  }
+
+  /**
+   * Checks if a {@link CircuitBreaker} with the given name was already registered.
+   *
+   * @param name That should be checked
+   * @return <code>true</code> if a CircuitBreaker was already registered, <code>false</code> otherwise
+   */
+  boolean contains(final String name) {
+    Assert.hasText(name, "Name for circuitbreaker needs to be set");
+    return concurrentBreakerMap.containsKey(name);
+  }
+
+  /**
+   * Returns the {@link CircuitBreaker} for the given name or <code>null</code> if no breaker with
+   * that name was registered before.
+   *
+   * @param name of the CircuitBreaker to get
+   * @return the found CircuitBreaker or <code>null</code>
+   */
+  CircuitBreaker get(final String name) {
+    Assert.hasText(name, "Name for circuitbreaker needs to be set");
+    return concurrentBreakerMap.get(name);
   }
 
   /**

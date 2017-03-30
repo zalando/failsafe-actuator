@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
+import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.lang.annotation.Annotation;
@@ -20,7 +20,7 @@ import java.lang.annotation.Annotation;
 public class FailsafeInjectionConfiguration {
 
   @Autowired
-  private CircuitBreakerFactory circuitBreakerFactory;
+  private CircuitBreakerRegistry circuitBreakerRegistry;
 
   @Bean
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -32,6 +32,6 @@ public class FailsafeInjectionConfiguration {
         break;
       }
     }
-    return circuitBreakerFactory.getOrCreate(annotation.value());
+    return circuitBreakerRegistry.getOrCreate(annotation.value());
   }
 }

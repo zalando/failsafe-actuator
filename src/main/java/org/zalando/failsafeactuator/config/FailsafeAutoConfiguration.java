@@ -10,10 +10,12 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import org.springframework.boot.actuate.condition.ConditionalOnEnabledEndpoint;
+import net.jodah.failsafe.CircuitBreaker;
+
+import org.springframework.beans.factory.InjectionPoint;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
@@ -21,10 +23,14 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
+import org.zalando.failsafeactuator.service.FailsafeBreaker;
+
+import java.lang.annotation.Annotation;
 
 /** Autoconfiguration for the FailsafeEndpoint. */
 @Configuration
@@ -43,6 +49,19 @@ public class FailsafeAutoConfiguration {
   @DependsOn(value = "circuitBreakerRegistry")
   public CircuitBreakerFactory circuitBreakerFactory() {
     return new CircuitBreakerFactory(circuitBreakerRegistry);
+  }
+
+  @Bean
+  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
+    FailsafeBreaker annotation = null;
+    for (Annotation a : ip.getAnnotations()) {
+      if (a instanceof FailsafeBreaker) {
+        annotation = (FailsafeBreaker) a;
+        break;
+      }
+    }
+    return circuitBreakerFactory().getOrCreate(annotation.value());
   }
 
   @Bean

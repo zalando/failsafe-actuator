@@ -51,18 +51,6 @@ public class FailsafeAutoConfiguration {
     return new CircuitBreakerFactory(circuitBreakerRegistry);
   }
 
-  @Bean
-  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
-    FailsafeBreaker annotation = null;
-    for (Annotation a : ip.getAnnotations()) {
-      if (a instanceof FailsafeBreaker) {
-        annotation = (FailsafeBreaker) a;
-        break;
-      }
-    }
-    return circuitBreakerFactory().getOrCreate(annotation.value());
-  }
 
   @Bean
   public FailsafeEndpoint createEndpoint() {

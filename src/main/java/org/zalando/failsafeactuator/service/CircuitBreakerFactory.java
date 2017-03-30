@@ -38,4 +38,17 @@ public class CircuitBreakerFactory {
     registry.registerCircuitBreaker(breaker, identifier);
     return breaker;
   }
+
+  /**
+   * Returns the registered {@link CircuitBreaker} for the given identifier or creates a new one.
+   *
+   * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
+   * @return an already registered or a new Instance of a {@link CircuitBreaker}
+   */
+  public CircuitBreaker getOrCreate(final String identifier) {
+    if (registry.contains(identifier)) {
+      return registry.get(identifier);
+    }
+    return createCircuitBreaker(identifier);
+  }
 }

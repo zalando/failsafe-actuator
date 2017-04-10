@@ -36,10 +36,13 @@ public class FailsafeAutoConfigurationTest {
 
   @Autowired
   CircuitBreakerConstructorInjection constructorInjection;
+
   @Autowired
   CircuitBreakerFieldInjection fieldInjection;
+
   @Autowired
   CircuitBreakerSetterInjection setterInjection;
+
   @Autowired
   DuplicatedCircuitBreakerInjection duplicates;
 
@@ -105,11 +108,10 @@ public class FailsafeAutoConfigurationTest {
       @Autowired
       @FailsafeBreaker("duplicate")
       CircuitBreaker a;
+
       @Autowired
       @FailsafeBreaker("duplicate")
       CircuitBreaker b;
     }
   }
-
-
 }

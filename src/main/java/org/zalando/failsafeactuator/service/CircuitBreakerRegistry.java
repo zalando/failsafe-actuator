@@ -71,7 +71,7 @@ public class CircuitBreakerRegistry {
   /**
    * Returns the {@link Map} with registered circuit breakers.
    *
-   * @return
+   * @return returns the referenced {@link Map}
    */
   public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
     return this.concurrentBreakerMap;

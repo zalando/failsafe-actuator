@@ -11,7 +11,6 @@ your app is relying on, currently is unavailable.
 
 ## Dependencies:
 
-* Java 8
 * Any build tool using Maven Central, or direct Download
 * [Spring Boot](http://projects.spring.io/spring-boot/) Auto Configuration
 * Usage of [failsafe](https://github.com/jhalterman/failsafe)
@@ -78,7 +77,3 @@ gradle build
 If you find an issue or have a proposal for improvement/enhancement open an issue in this repositories [Issue Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues).
 
 Pull requests are always welcome!
-
-
-
-

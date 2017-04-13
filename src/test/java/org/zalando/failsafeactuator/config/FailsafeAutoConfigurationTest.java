@@ -1,12 +1,15 @@
 /**
- * The MIT License (MIT)
- * Copyright (c) 2016 Zalando SE
+ * The MIT License (MIT) Copyright (c) 2016 Zalando SE
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package org.zalando.failsafeactuator.config;
 
@@ -24,11 +27,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerConstructorInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerFieldInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerSetterInjection;
-import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.DuplicatedCircuitBreakerInjection;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,9 +43,6 @@ public class FailsafeAutoConfigurationTest {
 
   @Autowired
   CircuitBreakerSetterInjection setterInjection;
-
-  @Autowired
-  DuplicatedCircuitBreakerInjection duplicates;
 
   @Test
   public void circuitBreakerConstructorInjection() throws Exception {
@@ -62,14 +60,6 @@ public class FailsafeAutoConfigurationTest {
   public void circuitBreakerSetterInjection() throws Exception {
     assertNotNull(setterInjection);
     assertNotNull(setterInjection.breaker);
-  }
-
-  @Test
-  public void duplicatedCircuitBreakerInjection() throws Exception {
-    assertNotNull(duplicates);
-    assertNotNull(duplicates.a);
-    assertNotNull(duplicates.b);
-    assertSame(duplicates.a, duplicates.b);
   }
 
   @Configuration
@@ -101,17 +91,6 @@ public class FailsafeAutoConfigurationTest {
       public void setBreaker(@FailsafeBreaker("setter") CircuitBreaker breaker) {
         this.breaker = breaker;
       }
-    }
-
-    @ComponentScan
-    public static class DuplicatedCircuitBreakerInjection {
-      @Autowired
-      @FailsafeBreaker("duplicate")
-      CircuitBreaker a;
-
-      @Autowired
-      @FailsafeBreaker("duplicate")
-      CircuitBreaker b;
     }
   }
 }

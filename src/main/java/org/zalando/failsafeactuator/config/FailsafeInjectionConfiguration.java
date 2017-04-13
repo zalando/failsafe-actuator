@@ -8,34 +8,40 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.zalando.failsafeactuator.service;
+package org.zalando.failsafeactuator.config;
 
 import net.jodah.failsafe.CircuitBreaker;
 
+import org.springframework.beans.factory.InjectionPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
+import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
+import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
-/** Factory Class to create {@link CircuitBreaker}'s which are registered in SpringContext and can therefore be exposed by {@link FailsafeEndpoint}. */
-public class CircuitBreakerFactory {
+import java.lang.annotation.Annotation;
 
-  private CircuitBreakerRegistry registry;
+/** Configuration class which enables the usage of {@link FailsafeBreaker} annotation. */
+@Configuration
+@Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
+public class FailsafeInjectionConfiguration {
 
-  public CircuitBreakerFactory(final CircuitBreakerRegistry registry) {
-    this.registry = registry;
-  }
+  @Autowired
+  private CircuitBreakerRegistry circuitBreakerRegistry;
 
-  /**
-   * Creates a new {@link CircuitBreaker} which can be used in regular way and is registered in the SpringContext.
-   *
-   * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
-   * @return new Instance of a {@link CircuitBreaker}
-   */
   @Bean
-  @Scope(scopeName = "prototype")
-  public CircuitBreaker createCircuitBreaker(final String identifier) {
-    final CircuitBreaker breaker = new CircuitBreaker();
-    registry.registerCircuitBreaker(breaker, identifier);
-    return breaker;
+  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
+    FailsafeBreaker annotation = null;
+    for (Annotation a : ip.getAnnotations()) {
+      if (a instanceof FailsafeBreaker) {
+        annotation = (FailsafeBreaker) a;
+        break;
+      }
+    }
+    return circuitBreakerRegistry.getOrCreate(annotation.value());
   }
 }

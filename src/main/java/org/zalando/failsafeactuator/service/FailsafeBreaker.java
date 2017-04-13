@@ -8,37 +8,21 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.zalando.failsafeactuator.factory;
+package org.zalando.failsafeactuator.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.zalando.failsafeactuator.TestConfiguration;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:application.properties")
-@SpringBootTest
-@WebAppConfiguration
-public class FactoryPostConstructTest {
+@Target({METHOD, PARAMETER, FIELD})
+@Retention(RUNTIME)
+@Documented
+public @interface FailsafeBreaker {
 
-  @Autowired
-  private TestConfiguration config;
-
-  @Test
-  public void instanceUnequalTest() {
-    assertNotNull(config);
-    assertTrue(true);
-  }
-
-  @Test
-  public void registerSecondBreakerWithSameNameTest() {
-    assertTrue(true);
-  }
+  String value();
 }

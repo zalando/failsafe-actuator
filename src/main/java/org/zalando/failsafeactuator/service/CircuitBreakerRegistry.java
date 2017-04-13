@@ -12,8 +12,8 @@ package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
 
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +27,8 @@ import javax.annotation.PreDestroy;
  */
 public class CircuitBreakerRegistry {
 
+  private static final String ALREADY_REGISTERED_ERROR = "There was a Circuit-Breaker registered already with name : %s ";
+
   private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
 
   /**
@@ -37,11 +39,33 @@ public class CircuitBreakerRegistry {
    * @param name Which is used to identify the CircuitBreaker
    */
   void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
-    Assert.hasText(name, "Name for circuitbreaker needs to be set");
-    Assert.notNull(breaker, "Circuitbreaker to add, can't be null");
+    Assert.hasText(name, "Name for circuit breaker needs to be set");
+    Assert.notNull(breaker, "Circuit breaker to add, can't be null");
 
     final CircuitBreaker replaced = concurrentBreakerMap.put(name, breaker);
-    Assert.isNull(replaced, "There was an Circuit-Breaker registered already with name : " + name);
+    Assert.isNull(replaced, String.format(ALREADY_REGISTERED_ERROR, name));
+  }
+
+  /**
+   * Checks if a {@link CircuitBreaker} with the given name was already registered.
+   *
+   * @param name That should be checked
+   * @return <code>true</code> if a CircuitBreaker was already registered, <code>false</code> otherwise
+   */
+  boolean contains(final String name) {
+    Assert.hasText(name, "Name for circuit breaker needs to be set");
+    return concurrentBreakerMap.containsKey(name);
+  }
+
+  /**
+   * Returns the {@link CircuitBreaker} for the given name or <code>null</code> if no breaker with that name was registered before.
+   *
+   * @param name of the CircuitBreaker to get
+   * @return the found CircuitBreaker or <code>null</code>
+   */
+  CircuitBreaker get(final String name) {
+    Assert.hasText(name, "Name for circuitbreaker needs to be set");
+    return concurrentBreakerMap.get(name);
   }
 
   /**
@@ -51,6 +75,29 @@ public class CircuitBreakerRegistry {
    */
   public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
     return this.concurrentBreakerMap;
+  }
+
+  /**
+   * Creates a new {@link CircuitBreaker} which can be used in regular way and is registered in the SpringContext.
+   *
+   * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
+   * @return new Instance of a {@link CircuitBreaker}
+   */
+  private CircuitBreaker createCircuitBreaker(final String identifier) {
+    final CircuitBreaker breaker = new CircuitBreaker();
+    registerCircuitBreaker(breaker, identifier);
+    return breaker;
+  }
+
+  /**
+   * Returns the registered {@link CircuitBreaker} for the given identifier or creates a new one.
+   *
+   * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
+   * @return an already registered or a new Instance of a {@link CircuitBreaker}
+   */
+  public CircuitBreaker getOrCreate(final String identifier) {
+    Assert.isTrue(!contains(identifier), String.format(ALREADY_REGISTERED_ERROR, identifier));
+    return createCircuitBreaker(identifier);
   }
 
   @PreDestroy

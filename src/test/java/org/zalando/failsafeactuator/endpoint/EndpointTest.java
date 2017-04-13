@@ -12,20 +12,16 @@ package org.zalando.failsafeactuator.endpoint;
 
 import net.jodah.failsafe.CircuitBreaker;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
-import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
-import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
+import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.util.Arrays;
 
@@ -33,9 +29,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(value = "classpath:application.properties")
-@ComponentScan(value = "org.zalando.failsafeactuator")
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointTest {
 
@@ -50,19 +44,11 @@ public class EndpointTest {
   private TestRestTemplate restTemplate;
 
   @Autowired
-  private CircuitBreakerFactory factory;
-
-  @Autowired
-  private CircuitBreakerRegistry registry;
-
-  @Before
-  public void setup() {
-    registry.getConcurrentBreakerMap().clear();
-  }
+  @FailsafeBreaker(BREAKER_NAME)
+  private CircuitBreaker breaker;
 
   @Test
   public void endpointTest() {
-    final CircuitBreaker breaker = factory.createCircuitBreaker(BREAKER_NAME);
     CircuitBreakerState state = fetchCircuitBreaker();
     assertTrue(state.isClosed());
     assertFalse(state.isOpen());
@@ -82,9 +68,7 @@ public class EndpointTest {
     assertFalse(state.isOpen());
     assertTrue(state.isHalfOpen());
     assertEquals(BREAKER_NAME, state.getName());
-
   }
-
 
   private CircuitBreakerState fetchCircuitBreaker() {
     final ResponseEntity<CircuitBreakerState[]> result = restTemplate.getForEntity(String.format(FAILSAFE_URL, port), CircuitBreakerState[].class);

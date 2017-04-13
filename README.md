@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/zalando-incubator/failsafe-actuator.svg?branch=master)](https://travis-ci.org/zalando-incubator/failsafe-actuator)
-[![Coverage Status](https://coveralls.io/repos/github/zalando-incubator/failsafe-actuator/badge.svg?branch=0.3.0)](https://coveralls.io/github/zalando-incubator/failsafe-actuator?branch=0.3.0)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zalando/failsafe-actuator.svg)](https://maven-badges.herokuapp.com/maven-central/org.zalando/failsafe-actuator)
 
 # Failsafe actuator
@@ -12,7 +11,6 @@ your app is relying on, currently is unavailable.
 
 ## Dependencies:
 
-* Java 8
 * Any build tool using Maven Central, or direct Download
 * [Spring Boot](http://projects.spring.io/spring-boot/) Auto Configuration
 * Usage of [failsafe](https://github.com/jhalterman/failsafe)
@@ -36,7 +34,15 @@ compile("org.zalando:failsafe-actuator:0.3.0")
 </dependency>
 ```
 
-After you did this, Autowire the `CircuitBreakerFactory` to your Bean and call the method `createCircuitBreaker` in order to create a new **Circuit Breaker**.
+After you did this, Autowire the `CircuitBreaker` by using 
+
+```
+@Autowired
+@FailsafeBreaker(value = "WhatABreak")
+CircuitBreaker breaker;
+```
+
+This will inject a new instance of a circuit breaker to your bean and register it for monitoring.
 
 Example:
 
@@ -46,13 +52,9 @@ Example:
 public class MyBean {
     
         @Autowired
-        private CircuitBreakerFactory factory;
+        @FailsafeBreaker(value = "WhatABreak")
+        private CircuitBreaker breaker;
         
-        @Postconstruct
-        public void init() {
-            //The created Circuit breaker is automatically registered at the endpoint with the given name
-            CircuitBreaker breaker = factory.createCircuitBreaker("SpringBreak");
-        }
 }
 ```
 
@@ -61,8 +63,7 @@ The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/pro
 The generated output will look like the following:
 
 ```
-CircuitBreakerState{name='testBreaker1', isClosed=true}
-CircuitBreakerState{name='testBreaker2', isClosed=false}
+[{"name":"WhatABreak","closed":true,"open":false,"half_open":false}]
 ```
 
 ## How to build:
@@ -76,7 +77,3 @@ gradle build
 If you find an issue or have a proposal for improvement/enhancement open an issue in this repositories [Issue Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues).
 
 Pull requests are always welcome!
-
-
-
-

@@ -22,7 +22,7 @@ In order to use this endpoint, just add the following dependency to your project
 
 **Gradle:**
 ```
-compile("org.zalando:failsafe-actuator:0.3.0")
+compile("org.zalando:failsafe-actuator:0.4.0")
 ```
 
 **Maven:**

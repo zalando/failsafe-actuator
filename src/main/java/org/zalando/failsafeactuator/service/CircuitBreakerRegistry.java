@@ -27,7 +27,7 @@ import javax.annotation.PreDestroy;
  */
 public class CircuitBreakerRegistry {
 
-  private static final String ALREADY_REGISTERED_ERROR = "There was an Circuit-Breaker registered already with name : %s ";
+  private static final String ALREADY_REGISTERED_ERROR = "There was a Circuit-Breaker registered already with name : %s ";
 
   private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
 

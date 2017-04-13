@@ -30,7 +30,7 @@ compile("org.zalando:failsafe-actuator:0.4.0")
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 

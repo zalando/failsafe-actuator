@@ -47,28 +47,6 @@ public class CircuitBreakerRegistry {
   }
 
   /**
-   * Checks if a {@link CircuitBreaker} with the given name was already registered.
-   *
-   * @param name That should be checked
-   * @return <code>true</code> if a CircuitBreaker was already registered, <code>false</code> otherwise
-   */
-  boolean contains(final String name) {
-    Assert.hasText(name, "Name for circuit breaker needs to be set");
-    return concurrentBreakerMap.containsKey(name);
-  }
-
-  /**
-   * Returns the {@link CircuitBreaker} for the given name or <code>null</code> if no breaker with that name was registered before.
-   *
-   * @param name of the CircuitBreaker to get
-   * @return the found CircuitBreaker or <code>null</code>
-   */
-  CircuitBreaker get(final String name) {
-    Assert.hasText(name, "Name for circuitbreaker needs to be set");
-    return concurrentBreakerMap.get(name);
-  }
-
-  /**
    * Returns the {@link Map} with registered circuit breakers.
    *
    * @return returns the referenced {@link Map}
@@ -96,7 +74,11 @@ public class CircuitBreakerRegistry {
    * @return an already registered or a new Instance of a {@link CircuitBreaker}
    */
   public CircuitBreaker getOrCreate(final String identifier) {
-    Assert.isTrue(!contains(identifier), String.format(ALREADY_REGISTERED_ERROR, identifier));
+    Assert.hasText(identifier, "Identifier for circuit breaker needs to be set");
+    final CircuitBreaker circuitBreaker = concurrentBreakerMap.get(identifier);
+    if (circuitBreaker != null) {
+      return circuitBreaker;
+    }
     return createCircuitBreaker(identifier);
   }
 

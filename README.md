@@ -17,6 +17,14 @@ By enabling the support of Springs dependency injection, the usage of *Failsafe*
 
 Having the possibility to monitor the state of a Circuit Breakers is essential for applications which are used in production, since you can directly see if one of the third parties your app is relying on, currently is unavailable. This enables you and your teams to act accordingly and take the right decisions quick.
 
+## Roadmap
+
+* Gather Metrics like:
+** failed requests past 1m/5m/15m
+** success requests past 1m/5m/15m
+** overall requests past 1m/5m/15m
+
+
 ## Getting Started
 
 In order to use Failsafe Actuator, just add the following dependency to your project:
@@ -68,7 +76,7 @@ The generated output will look like the following:
 [{"name":"WhatABreak","closed":true,"open":false,"half_open":false}]
 ```
 
-### Dependencies
+## Dependencies
 * Java 8
 * [Spring Boot](http://projects.spring.io/spring-boot/) 
 * Usage of [failsafe](https://github.com/jhalterman/failsafe)

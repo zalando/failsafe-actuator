@@ -24,7 +24,6 @@ Having the possibility to monitor the state of a Circuit Breakers is essential f
 ** success requests past 1m/5m/15m
 ** overall requests past 1m/5m/15m
 
-
 ## Getting Started
 
 In order to use Failsafe Actuator, just add the following dependency to your project:

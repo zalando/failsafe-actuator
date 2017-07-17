@@ -10,6 +10,7 @@
  */
 package org.zalando.failsafeactuator.config;
 
+import com.codahale.metrics.MetricRegistry;
 import net.jodah.failsafe.CircuitBreaker;
 
 import org.springframework.beans.factory.InjectionPoint;
@@ -38,6 +39,7 @@ import java.lang.annotation.Annotation;
 public class FailsafeAutoConfiguration {
 
   private CircuitBreakerRegistry circuitBreakerRegistry;
+  private MetricRegistry metricRegistry;
 
   @Bean
   public CircuitBreakerRegistry circuitBreakerRegistry() {
@@ -46,9 +48,15 @@ public class FailsafeAutoConfiguration {
   }
 
   @Bean
+  public MetricRegistry metricRegistry() {
+    this.metricRegistry = new MetricRegistry();
+    return metricRegistry;
+  }
+
+  @Bean
   @DependsOn(value = "circuitBreakerRegistry")
   public CircuitBreakerFactory circuitBreakerFactory() {
-    return new CircuitBreakerFactory(circuitBreakerRegistry);
+    return new CircuitBreakerFactory(circuitBreakerRegistry, metricRegistry);
   }
 
   @Bean

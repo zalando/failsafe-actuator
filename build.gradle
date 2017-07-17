@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     compile('net.jodah:failsafe:0.8.1',
+            'io.dropwizard.metrics:metrics-core:3.2.3',
             'org.springframework.boot:spring-boot-starter-actuator:1.5.1.RELEASE'
     )
 

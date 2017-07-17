@@ -10,19 +10,23 @@
  */
 package org.zalando.failsafeactuator.service;
 
+import com.codahale.metrics.MetricRegistry;
 import net.jodah.failsafe.CircuitBreaker;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.zalando.failsafeactuator.domain.SpringBreaker;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /** Factory Class to create {@link CircuitBreaker}'s which are registered in SpringContext and can therefore be exposed by {@link FailsafeEndpoint}. */
 public class CircuitBreakerFactory {
 
-  private CircuitBreakerRegistry registry;
+  private final MetricRegistry metricRegistry;
+  private final CircuitBreakerRegistry registry;
 
-  public CircuitBreakerFactory(final CircuitBreakerRegistry registry) {
+  public CircuitBreakerFactory(final CircuitBreakerRegistry registry, final MetricRegistry metricRegistry) {
     this.registry = registry;
+    this.metricRegistry = metricRegistry;
   }
 
   /**
@@ -34,7 +38,7 @@ public class CircuitBreakerFactory {
   @Bean
   @Scope(scopeName = "prototype")
   public CircuitBreaker createCircuitBreaker(final String identifier) {
-    final CircuitBreaker breaker = new CircuitBreaker();
+    final CircuitBreaker breaker = new SpringBreaker(identifier, metricRegistry);
     registry.registerCircuitBreaker(breaker, identifier);
     return breaker;
   }

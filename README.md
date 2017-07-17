@@ -20,9 +20,9 @@ Having the possibility to monitor the state of a Circuit Breakers is essential f
 ## Roadmap
 
 * Gather Metrics like:
-** failed requests past 1m/5m/15m
-** success requests past 1m/5m/15m
-** overall requests past 1m/5m/15m
+    * failed requests past 1m/5m/15m
+    * success requests past 1m/5m/15m
+    * overall requests past 1m/5m/15m
 
 ## Getting Started
 

@@ -59,3 +59,5 @@ fabric.properties
 # Gradle build-folder
 build
 .gradle
+
+target/

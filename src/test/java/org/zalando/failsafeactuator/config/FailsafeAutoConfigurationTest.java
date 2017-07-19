@@ -33,13 +33,13 @@ import static org.junit.Assert.assertNotNull;
 public class FailsafeAutoConfigurationTest {
 
   @Autowired
-  CircuitBreakerConstructorInjection constructorInjection;
+  private CircuitBreakerConstructorInjection constructorInjection;
 
   @Autowired
-  CircuitBreakerFieldInjection fieldInjection;
+  private CircuitBreakerFieldInjection fieldInjection;
 
   @Autowired
-  CircuitBreakerSetterInjection setterInjection;
+  private CircuitBreakerSetterInjection setterInjection;
 
   @Test
   public void circuitBreakerConstructorInjection() throws Exception {

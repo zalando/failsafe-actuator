@@ -1,4 +1,4 @@
 language: java
 
 after_success:
-  - gradlew cobertura coveralls
+  - mvn test

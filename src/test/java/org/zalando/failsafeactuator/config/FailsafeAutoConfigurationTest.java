@@ -77,12 +77,12 @@ public class FailsafeAutoConfigurationTest {
     public static class CircuitBreakerFieldInjection {
       @Autowired
       @FailsafeBreaker("field")
-      CircuitBreaker breaker;
+      private CircuitBreaker breaker;
     }
 
     @Component
     public static class CircuitBreakerSetterInjection {
-      CircuitBreaker breaker;
+      private CircuitBreaker breaker;
 
       @Autowired
       public void setBreaker(@FailsafeBreaker("setter") CircuitBreaker breaker) {

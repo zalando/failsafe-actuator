@@ -38,7 +38,7 @@ public class CircuitBreakerRegistry {
    * @param breaker Which should be added
    * @param name Which is used to identify the CircuitBreaker
    */
-  void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
+  private void registerCircuitBreaker(final CircuitBreaker breaker, final String name) {
     Assert.hasText(name, "Name for circuit breaker needs to be set");
     Assert.notNull(breaker, "Circuit breaker to add, can't be null");
 

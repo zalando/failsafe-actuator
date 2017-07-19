@@ -6,7 +6,7 @@
 	<groupId>org.zalando</groupId>
 	<artifactId>failsafe-actuator</artifactId>
 	<version>0.4.1</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>Failsafe-Actuator</name>
     <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
@@ -63,9 +63,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20</version>
 				<configuration>
-					<!-- Sets the VM argument line used when unit tests are run. -->
-					<argLine>${surefireArgLine}</argLine>
+					<argLine>${argLine}</argLine>
 				</configuration>
 			</plugin>
 
@@ -74,18 +74,18 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.8</version>
 				<executions>
-					<!-- Prepares the property pointing to the JaCoCo runtime agent which 
-						is passed as VM argument when Maven the Surefire plugin is executed. -->
 					<execution>
-						<id>pre-unit-test-jacoco</id>
+						<id>jacoco-initialize</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<!-- Sets the name of the property containing the settings for JaCoCo 
-								runtime agent. -->
-							<propertyName>surefireArgLine</propertyName>
-						</configuration>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -93,9 +93,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
@@ -106,6 +108,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -185,5 +188,48 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
+	<profiles>
+	<profile>
+		<id>test-coverage</id>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.6.3.201306030806</version>
+					<configuration>
+						<destfile>${basedir}/target/coverage-reports/jacoco-unit.exec</destfile>
+						<datafile>${basedir}/target/coverage-reports/jacoco-unit.exec</datafile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>prepare-unit-tests</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<!-- prepare agent for measuring integration tests -->
+						<execution>
+							<id>prepare-integration-tests</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+							<phase>pre-integration-test</phase>
+							<configuration>
+								<propertyName>itCoverageAgent</propertyName>
+							</configuration>
+						</execution>
+						<execution>
+							<id>jacoco-site</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+	</profiles>
 </project>

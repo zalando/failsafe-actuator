@@ -66,7 +66,7 @@ public class FailsafeAutoConfigurationTest {
 
     @Component
     public static class CircuitBreakerConstructorInjection {
-      final CircuitBreaker breaker;
+      private final CircuitBreaker breaker;
 
       public CircuitBreakerConstructorInjection(@FailsafeBreaker("constructor") CircuitBreaker breaker) {
         this.breaker = breaker;

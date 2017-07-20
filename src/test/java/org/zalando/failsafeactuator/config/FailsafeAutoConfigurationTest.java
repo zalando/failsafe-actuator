@@ -33,13 +33,13 @@ import static org.junit.Assert.assertNotNull;
 public class FailsafeAutoConfigurationTest {
 
   @Autowired
-  CircuitBreakerConstructorInjection constructorInjection;
+  private CircuitBreakerConstructorInjection constructorInjection;
 
   @Autowired
-  CircuitBreakerFieldInjection fieldInjection;
+  private CircuitBreakerFieldInjection fieldInjection;
 
   @Autowired
-  CircuitBreakerSetterInjection setterInjection;
+  private CircuitBreakerSetterInjection setterInjection;
 
   @Test
   public void circuitBreakerConstructorInjection() throws Exception {
@@ -66,7 +66,7 @@ public class FailsafeAutoConfigurationTest {
 
     @Component
     public static class CircuitBreakerConstructorInjection {
-      final CircuitBreaker breaker;
+      private final CircuitBreaker breaker;
 
       public CircuitBreakerConstructorInjection(@FailsafeBreaker("constructor") CircuitBreaker breaker) {
         this.breaker = breaker;
@@ -77,12 +77,12 @@ public class FailsafeAutoConfigurationTest {
     public static class CircuitBreakerFieldInjection {
       @Autowired
       @FailsafeBreaker("field")
-      CircuitBreaker breaker;
+      private CircuitBreaker breaker;
     }
 
     @Component
     public static class CircuitBreakerSetterInjection {
-      CircuitBreaker breaker;
+      private CircuitBreaker breaker;
 
       @Autowired
       public void setBreaker(@FailsafeBreaker("setter") CircuitBreaker breaker) {

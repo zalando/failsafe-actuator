@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.zalando</groupId>
+	<artifactId>failsafe-actuator</artifactId>
+	<version>0.4.1</version>
+	<packaging>jar</packaging>
+
+	<name>Failsafe-Actuator</name>
+    <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
+    <url>https://github.com/zalando-incubator/failsafe-actuator</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+        <dependency>
+			<groupId>net.jodah</groupId>
+			<artifactId>failsafe</artifactId>
+            <version>0.8.1</version>
+			<scope>compile</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+            <version>1.5.2.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<!-- Lombok will not be used on the live system, it is only used when 
+				compiling, so we don't package it -->
+			<scope>provided</scope>
+            <version>1.16.18</version>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+            <version>1.5.2.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.2.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+            <version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20</version>
+				<configuration>
+					<argLine>${argLine}</argLine>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.8</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<scm>
+		<connection>scm:git:https://github.com/zalando-incubator/failsafe-actuator.git</connection>
+		<developerConnection>scm:git:https://github.com/zalando-incubator/failsafe-actuator.git</developerConnection>
+		<url>https://github.com/zalando-incubator/failsafe-actuator</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<organization>
+		<name>Zalando SE</name>
+		<url>https://tech.zalando.com/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>mpickhan</id>
+			<name>Malte Pickhan</name>
+			<organization>Zalando SE</organization>
+			<email>malte.pickhan@zalando.de</email>
+		</developer>
+		<developer>
+			<id>mmodabber</id>
+			<name>Mahdi Modabber</name>
+			<organization>Zalando SE</organization>
+			<email>mahdi.modabber@zalando.de</email>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<profiles>
+	<profile>
+		<id>test-coverage</id>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.6.3.201306030806</version>
+					<configuration>
+						<destfile>${basedir}/target/coverage-reports/jacoco-unit.exec</destfile>
+						<datafile>${basedir}/target/coverage-reports/jacoco-unit.exec</datafile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>prepare-unit-tests</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<!-- prepare agent for measuring integration tests -->
+						<execution>
+							<id>prepare-integration-tests</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+							<phase>pre-integration-test</phase>
+							<configuration>
+								<propertyName>itCoverageAgent</propertyName>
+							</configuration>
+						</execution>
+						<execution>
+							<id>jacoco-site</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+	</profiles>
+</project>

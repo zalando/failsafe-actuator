@@ -4,31 +4,32 @@
 
 # Failsafe Actuator
 
-**Failsafe Actuator** provides a simple monitoring interface for [Spring Boot](https://projects.spring.io/spring-boot/) applications which are using the [Failsafe](https://github.com/jhalterman/failsafe) library. 
-By using this library, the state of your [Circuit Breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (closed, open, half-open) will be exposed to your Spring Actuator endpoint.
-
-Just make use of the `@FailsafeBreaker` annotation, to inject a Circuit Breaker where you need it. The state information of the Circuit Breaker will be exposed out of the box and without any additional efforts.
-
-
-The library will be enhanced with furhter features, a description of them can be found in the issue tracker. Still it's already used in production environments by Zalando.
+**Failsafe Actuator** is a Java library that provides a simple monitoring interface for [Spring Boot](https://projects.spring.io/spring-boot/) applications that use the [Failsafe](https://github.com/jhalterman/failsafe) library. Using Failsafe Actuator will readily expose the state of your [circuit breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (closed, open, half-open) to your Spring Actuator endpoint without additional effort. Use the `@FailsafeBreaker` annotation to inject a circuit breaker whereever you need one. 
 
 ## Core Technical Concepts/Inspiration
 
-By enabling the support of Springs dependency injection, the usage of *Failsafe* is even easier. 
+Failsafe Actuator supports Spring's dependency injection to make it easier to use *Failsafe*. It allows you to monitor the state of your Circuit Breakers so that, whenever a third party that your app relies upon suddently becomes unavailable, you can discover it immediately and take action. This is essential for applications used in production.
 
-Having the possibility to monitor the state of a Circuit Breakers is essential for applications which are used in production, since you can directly see if one of the third parties your app is relying on, currently is unavailable. This enables you and your teams to act accordingly and take the right decisions quick.
-
-## Roadmap
-
-* Gather Metrics like:
+## Development Status/Project Roadmap
+This library is currently under development and used in production at [Zalando](https://jobs.zalando.com/tech/). It will offer additional features in the future, such as metrics-gathering for:
     * failed requests past 1m/5m/15m
     * success requests past 1m/5m/15m
     * overall requests past 1m/5m/15m
 
+Find more details about our development plans in the [Issues Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues). 
+
+We're [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), so if you find an interesting "Help Wanted" issue then please drop us a line in the related issue to claim it and begin working.
+
 ## Getting Started
 
-In order to use Failsafe Actuator, just add the following dependency to your project:
+### Dependencies/Requirements
+* Java 8
+* [Spring Boot](http://projects.spring.io/spring-boot/) 
+* [Failsafe](https://github.com/jhalterman/failsafe)
 
+### Running/Using
+
+To use Failsafe Actuator, add the following dependency to your project:
 
 **Gradle:**
 ```
@@ -44,7 +45,7 @@ compile("org.zalando:failsafe-actuator:0.4.0")
 </dependency>
 ```
 
-After you did this, Autowire the `CircuitBreaker` by using 
+Then autowire the `CircuitBreaker` by using:
 
 ```
 @Autowired
@@ -52,9 +53,7 @@ After you did this, Autowire the `CircuitBreaker` by using
 CircuitBreaker breaker;
 ```
 
-This will inject a new instance of a circuit breaker to your bean and register it for monitoring.
-
-Example:
+This will inject a new instance of a circuit breaker to your bean and register it for monitoring. Example:
 
 ```
 
@@ -70,30 +69,18 @@ public class MyBean {
 
 The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
 
-The generated output will look like the following:
+The generated output will look like this:
 
 ```
 [{"name":"WhatABreak","closed":true,"open":false,"half_open":false}]
 ```
 
-## Dependencies
-* Java 8
-* [Spring Boot](http://projects.spring.io/spring-boot/) 
-* Usage of [failsafe](https://github.com/jhalterman/failsafe)
-
-
-## How to build on your own
+### How to Build on Your Own
 
 ```
 gradle build
 ```
 
-## Contribution
-
-If you find an issue or have a proposal for improvement/enhancement open an issue in this repositories [Issue Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues).
-
-Pull requests are always welcome!
-
 ## License
 
-This code is released under the MIT license.
+This code is released under the MIT license. See [License](LICENSE.md).

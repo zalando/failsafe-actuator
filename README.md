@@ -4,21 +4,30 @@
 
 # Failsafe Actuator
 
-**Failsafe Actuator** is a Java library that provides a simple monitoring interface for [Spring Boot](https://projects.spring.io/spring-boot/) applications that use the [Failsafe](https://github.com/jhalterman/failsafe) library. Using Failsafe Actuator will readily expose the state of your [circuit breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (closed, open, half-open) to your Spring Actuator endpoint without additional effort. Use the `@FailsafeBreaker` annotation to inject a circuit breaker whereever you need one. 
+**Failsafe Actuator** is a Java library that provides a simple monitoring interface for [Spring Boot](https://projects.spring.io/spring-boot/) 
+applications that use the [Failsafe](https://github.com/jhalterman/failsafe) library. 
+Using Failsafe Actuator will readily expose the state of your [Circuit Breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (closed, open, half-open) 
+to your Spring Actuator endpoint without additional effort. 
+Use the `@FailsafeBreaker` annotation to inject a circuit breaker wherever you need one. 
 
 ## Core Technical Concepts/Inspiration
 
-Failsafe Actuator supports Spring's dependency injection to make it easier to use *Failsafe*. It allows you to monitor the state of your Circuit Breakers so that, whenever a third party that your app relies upon suddently becomes unavailable, you can discover it immediately and take action. This is essential for applications used in production.
+Failsafe Actuator supports Spring's dependency injection to make it easier to use *Failsafe*. 
+It allows you to monitor the state of your Circuit Breakers so that, whenever a third party that your app relies upon 
+suddenly becomes unavailable, you can discover it immediately and take action. This is essential for applications used in production.
 
 ## Development Status/Project Roadmap
-This library is currently under development and used in production at [Zalando](https://jobs.zalando.com/tech/). It will offer additional features in the future, such as metrics-gathering for:
+This library is currently under development and used in production at [Zalando](https://jobs.zalando.com/tech/). 
+It will offer additional features in the future, such as metrics-gathering for:
     * failed requests past 1m/5m/15m
     * success requests past 1m/5m/15m
     * overall requests past 1m/5m/15m
+    * easy configuration of Circuit Breaker and Policies
 
 Find more details about our development plans in the [Issues Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues). 
 
-We're [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), so if you find an interesting "Help Wanted" issue then please drop us a line in the related issue to claim it and begin working.
+We're [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), 
+so if you find an interesting "Help Wanted" issue then please drop us a line in the related issue to claim it and begin working.
 
 ## Getting Started
 

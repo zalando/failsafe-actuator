@@ -19,10 +19,10 @@ suddenly becomes unavailable, you can discover it immediately and take action. T
 ## Development Status/Project Roadmap
 This library is currently under development and used in production at [Zalando](https://jobs.zalando.com/tech/). 
 It will offer additional features in the future, such as metrics-gathering for:
-    * failed requests past 1m/5m/15m
-    * success requests past 1m/5m/15m
-    * overall requests past 1m/5m/15m
-    * easy configuration of Circuit Breaker and Policies
+* failed requests past 1m/5m/15m
+* success requests past 1m/5m/15m
+* overall requests past 1m/5m/15m
+* easy configuration of Circuit Breaker and Policies
 
 Find more details about our development plans in the [Issues Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues). 
 

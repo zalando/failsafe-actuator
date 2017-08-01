@@ -42,7 +42,7 @@ To use Failsafe Actuator, add the following dependency to your project:
 
 **Gradle:**
 ```
-compile("org.zalando:failsafe-actuator:0.4.0")
+compile("org.zalando:failsafe-actuator:0.4.1")
 ```
 
 **Maven:**
@@ -50,7 +50,7 @@ compile("org.zalando:failsafe-actuator:0.4.0")
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
 </dependency>
 ```
 

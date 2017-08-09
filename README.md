@@ -92,4 +92,4 @@ gradle build
 
 ## License
 
-This code is released under the MIT license. See [License](LICENSE.md).
+This code is released under the MIT license. See [License](LICENSE).

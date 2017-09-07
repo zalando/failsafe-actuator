@@ -43,7 +43,7 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
                          try {
                            return methodInvocation.proceed();
                          } catch (Throwable throwable) {
-                           throw new RuntimeException(throwable);
+                           throw new FailsafeBreakerWrappedException(throwable);
                          }
                        }
                      });

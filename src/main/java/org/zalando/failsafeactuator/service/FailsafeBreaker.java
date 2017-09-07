@@ -13,6 +13,7 @@ package org.zalando.failsafeactuator.service;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.util.Optional;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -25,4 +26,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface FailsafeBreaker {
 
   String value();
+
+  String fallbackMethod() default "";
 }

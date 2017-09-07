@@ -35,7 +35,7 @@ public class FailsafeAspectConfigurationTest {
   @Test
   public void circuitBreakerWithoutFallback() throws Exception {
     assertThatThrownBy(() -> methodProtection.withoutFallback("withoutFallback"))
-      .isInstanceOf(NullPointerException.class)
+      .isInstanceOf(NumberFormatException.class)
       .hasMessageContaining("withoutFallback");
   }
 
@@ -62,12 +62,12 @@ public class FailsafeAspectConfigurationTest {
 
       @FailsafeBreaker("withoutFallBack")
       public String withoutFallback(String callArg) {
-        throw new NullPointerException(callArg);
+        throw new NumberFormatException(callArg);
       }
 
       @FailsafeBreaker(value = "withFallBack", fallbackMethod = "fallback")
       public String withFallback(String callArg) {
-        throw new NullPointerException(callArg);
+        throw new NumberFormatException(callArg);
       }
 
       public String fallback(String fallbackArg) {
@@ -76,7 +76,7 @@ public class FailsafeAspectConfigurationTest {
 
       @FailsafeBreaker(value = "withFallBack", fallbackMethod = "failingFallback")
       public String withFailingFallback(String callArg) {
-        throw new NullPointerException(callArg);
+        throw new NumberFormatException(callArg);
       }
 
       public String failingFallback(String fallbackArg) {

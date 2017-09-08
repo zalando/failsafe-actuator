@@ -59,8 +59,9 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
         }
       }
 
-      if (e.getCause() != null)
+      if (e.getCause() != null) {
         throw e.getCause();
+      }
       throw e;
     }
   }

@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigraionTestConfiguration.FailsafeBreakerMethodProtection;
+import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigurationTestConfiguration.FailsafeBreakerMethodProtection;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +55,7 @@ public class FailsafeAspectConfigurationTest {
   @Configuration
   @Import(FailsafeAutoConfiguration.class)
   @ComponentScan
-  public static class FailsafeAutoConfigraionTestConfiguration {
+  public static class FailsafeAutoConfigurationTestConfiguration {
 
     @Component
     public static class FailsafeBreakerMethodProtection {

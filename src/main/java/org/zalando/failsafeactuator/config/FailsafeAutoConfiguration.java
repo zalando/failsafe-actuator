@@ -10,6 +10,7 @@
  */
 package org.zalando.failsafeactuator.config;
 
+import com.codahale.metrics.MetricRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
@@ -30,9 +31,11 @@ public class FailsafeAutoConfiguration {
 
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
+  private MetricRegistry metricRegistry;
+
   @Bean
   public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry();
+    circuitBreakerRegistry = new CircuitBreakerRegistry(metricRegistry);
     return circuitBreakerRegistry;
   }
 

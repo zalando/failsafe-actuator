@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigurationTestConfiguration.FailsafeBreakerMethodProtection;
+import org.zalando.failsafeactuator.service.Failsafe;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,12 +61,12 @@ public class FailsafeAspectConfigurationTest {
     @Component
     public static class FailsafeBreakerMethodProtection {
 
-      @FailsafeBreaker("withoutFallBack")
+      @Failsafe("withoutFallBack")
       public String withoutFallback(String callArg) {
         throw new NumberFormatException(callArg);
       }
 
-      @FailsafeBreaker(value = "withFallBack", fallbackMethod = "fallback")
+      @Failsafe(value = "withFallBack", fallbackMethod = "fallback")
       public String withFallback(String callArg) {
         throw new NumberFormatException(callArg);
       }
@@ -74,7 +75,7 @@ public class FailsafeAspectConfigurationTest {
         return "withFallback";
       }
 
-      @FailsafeBreaker(value = "withFallBack", fallbackMethod = "failingFallback")
+      @Failsafe(value = "withFallBack", fallbackMethod = "failingFallback")
       public String withFailingFallback(String callArg) {
         throw new NumberFormatException(callArg);
       }

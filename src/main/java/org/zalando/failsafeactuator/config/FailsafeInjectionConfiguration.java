@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
+import org.zalando.failsafeactuator.service.Failsafe;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.lang.annotation.Annotation;
@@ -35,10 +36,10 @@ public class FailsafeInjectionConfiguration {
   @Bean
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
   public CircuitBreaker circuitBreaker(InjectionPoint ip) {
-    FailsafeBreaker annotation = null;
+    Failsafe annotation = null;
     for (Annotation a : ip.getAnnotations()) {
-      if (a instanceof FailsafeBreaker) {
-        annotation = (FailsafeBreaker) a;
+      if (a instanceof Failsafe) {
+        annotation = (Failsafe) a;
         break;
       }
     }

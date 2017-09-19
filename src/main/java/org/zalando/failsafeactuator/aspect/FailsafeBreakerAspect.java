@@ -17,7 +17,6 @@ import net.jodah.failsafe.Failsafe;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -32,7 +31,7 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
 
   public Object invoke(final MethodInvocation methodInvocation) throws Throwable {
     final Method method = methodInvocation.getMethod();
-    final FailsafeBreaker breaker = method.getAnnotation(FailsafeBreaker.class);
+    final org.zalando.failsafeactuator.aspect.Failsafe breaker = method.getAnnotation(org.zalando.failsafeactuator.aspect.Failsafe.class);
 
     final CircuitBreaker circuitBreaker = circuitBreakerRegistry.getOrCreate(breaker.value());
     try {

@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
-import org.zalando.failsafeactuator.service.Failsafe;
+import org.zalando.failsafeactuator.aspect.Failsafe;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.lang.annotation.Annotation;

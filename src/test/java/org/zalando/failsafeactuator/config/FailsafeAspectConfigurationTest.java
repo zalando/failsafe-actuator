@@ -20,8 +20,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigurationTestConfiguration.FailsafeBreakerMethodProtection;
-import org.zalando.failsafeactuator.service.Failsafe;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
+import org.zalando.failsafeactuator.aspect.Failsafe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

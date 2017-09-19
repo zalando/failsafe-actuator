@@ -193,6 +193,12 @@
 			<organization>Zalando SE</organization>
 			<email>mahdi.modabber@zalando.de</email>
 		</developer>
+		<developer>
+			<id>pdaum</id>
+			<name>Peter Daumr</name>
+			<organization>Zalando SE</organization>
+			<email>peter.daum@zalando.de</email>
+		</developer>
 	</developers>
 
 	<licenses>

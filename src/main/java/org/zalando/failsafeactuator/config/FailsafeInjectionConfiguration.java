@@ -21,11 +21,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 import org.zalando.failsafeactuator.aspect.Failsafe;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.lang.annotation.Annotation;
 
-/** Configuration class which enables the usage of {@link FailsafeBreaker} annotation. */
+/** Configuration class which enables the usage of {@link Failsafe} annotation. */
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeInjectionConfiguration {

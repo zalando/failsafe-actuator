@@ -33,7 +33,7 @@ public class FailsafeAspectAutoConfiguration {
   @Bean
   public Advisor failsafeBreakerPointcutAdvisor(FailsafeBreakerAspect failsafeBreakerAspect) {
     AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-    pointcut.setExpression("@annotation(org.zalando.failsafeactuator.service.FailsafeBreaker)");
+    pointcut.setExpression("@annotation(org.zalando.failsafeactuator.aspect.Failsafe)");
     return new DefaultPointcutAdvisor(pointcut, failsafeBreakerAspect);
   }
 }

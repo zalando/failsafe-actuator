@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.zalando.failsafeactuator.aspect.Failsafe;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerConstructorInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerFieldInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerSetterInjection;
@@ -68,7 +69,7 @@ public class FailsafeAutoConfigurationTest {
     public static class CircuitBreakerConstructorInjection {
       private final CircuitBreaker breaker;
 
-      public CircuitBreakerConstructorInjection(@FailsafeBreaker("constructor") CircuitBreaker breaker) {
+      public CircuitBreakerConstructorInjection(@Failsafe("constructor") CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }
@@ -76,7 +77,7 @@ public class FailsafeAutoConfigurationTest {
     @Component
     public static class CircuitBreakerFieldInjection {
       @Autowired
-      @FailsafeBreaker("field")
+      @Failsafe("field")
       private CircuitBreaker breaker;
     }
 
@@ -85,7 +86,7 @@ public class FailsafeAutoConfigurationTest {
       private CircuitBreaker breaker;
 
       @Autowired
-      public void setBreaker(@FailsafeBreaker("setter") CircuitBreaker breaker) {
+      public void setBreaker(@Failsafe("setter") CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }

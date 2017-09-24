@@ -59,4 +59,10 @@ public class FailsafeAutoConfiguration {
       return resolver.getProperty("enabled", Boolean.class, defaultValue);
     }
   }
+
+  @Bean
+  @DependsOn("circuitBreakerRegistry")
+  public FailsafeConfigPostProcessor failsafeConfigPostProcessor() {
+    return new FailsafeConfigPostProcessor();
+  }
 }

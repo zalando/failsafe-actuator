@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,6 @@ public class FailsafeConfig {
     private Duration delay;
     private Threshold successThreshold;
     private Threshold failureThreshold;
-    private Class<? extends Throwable>[] failOn;
   }
 
   @Data
@@ -39,6 +39,40 @@ public class FailsafeConfig {
 
     public Threshold(Integer threshold) {
       this(threshold, threshold);
+    }
+  }
+
+  public void populateBreakersWithDefaultsIfNecessary() {
+    Collection<Breaker> breakers = getBreaker().values();
+    for (FailsafeConfig.Breaker breaker : breakers) {
+      timeoutDefault(breaker);
+      delayDefault(breaker);
+      successThresholdDefault(breaker);
+      failureThresholdDefault(breaker);
+    }
+  }
+
+  private void timeoutDefault(Breaker breaker) {
+    if (breaker.getTimeout() == null) {
+      breaker.setTimeout(defaults.timeout);
+    }
+  }
+
+  private void delayDefault(Breaker breaker) {
+    if(breaker.getDelay() == null) {
+      breaker.setDelay(defaults.delay);
+    }
+  }
+
+  private void successThresholdDefault(Breaker breaker) {
+    if (breaker.getSuccessThreshold() == null) {
+      breaker.setSuccessThreshold(defaults.successThreshold);
+    }
+  }
+
+  private void failureThresholdDefault(Breaker breaker) {
+    if (breaker.getFailureThreshold() == null) {
+      breaker.setFailureThreshold(defaults.failureThreshold);
     }
   }
 }

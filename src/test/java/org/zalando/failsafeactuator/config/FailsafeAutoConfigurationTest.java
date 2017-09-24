@@ -25,7 +25,6 @@ import org.zalando.failsafeactuator.aspect.Failsafe;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerConstructorInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerFieldInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerSetterInjection;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import static org.junit.Assert.assertNotNull;
 

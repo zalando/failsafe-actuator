@@ -75,4 +75,8 @@ public class FailsafeConfig {
       breaker.setFailureThreshold(defaults.failureThreshold);
     }
   }
+
+  public Breaker getConfigForBreaker(String breakerName) {
+    return breaker.getOrDefault(breakerName, defaults);
+  }
 }

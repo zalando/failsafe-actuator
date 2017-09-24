@@ -14,6 +14,7 @@ import org.springframework.core.env.Environment;
 import org.zalando.failsafeactuator.config.converter.DurationConverter;
 import org.zalando.failsafeactuator.config.converter.ThresholdConverter;
 import org.zalando.failsafeactuator.config.model.FailsafeConfig;
+import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 @Slf4j
 public class FailsafeConfigPostProcessor implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
@@ -21,10 +22,13 @@ public class FailsafeConfigPostProcessor implements BeanDefinitionRegistryPostPr
 
   private FailsafeConfig failsafeConfig;
 
+  private CircuitBreakerRegistry circuitBreakerRegistry;
+
   @Override
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
     FailsafeConfig failsafeConfig = getFailsafeConfig();
     failsafeConfig.populateBreakersWithDefaultsIfNecessary();
+    circuitBreakerRegistry.setFailsafeConfig(failsafeConfig);
     log.debug("{}", failsafeConfig);
   }
 

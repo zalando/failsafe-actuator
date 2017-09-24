@@ -63,6 +63,6 @@ public class FailsafeAutoConfiguration {
   @Bean
   @DependsOn("circuitBreakerRegistry")
   public FailsafeConfigPostProcessor failsafeConfigPostProcessor() {
-    return new FailsafeConfigPostProcessor();
+    return new FailsafeConfigPostProcessor(circuitBreakerRegistry);
   }
 }

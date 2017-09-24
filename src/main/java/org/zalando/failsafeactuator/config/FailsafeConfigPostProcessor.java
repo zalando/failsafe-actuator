@@ -47,7 +47,7 @@ public class FailsafeConfigPostProcessor implements BeanDefinitionRegistryPostPr
   }
 
   @SneakyThrows
-  FailsafeConfig getFailsafeConfig() {
+  private FailsafeConfig getFailsafeConfig() {
     if (failsafeConfig == null) {
       final PropertiesConfigurationFactory<FailsafeConfig> factory =
         new PropertiesConfigurationFactory<>(FailsafeConfig.class);
@@ -66,7 +66,7 @@ public class FailsafeConfigPostProcessor implements BeanDefinitionRegistryPostPr
 
   @Override
   public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-
+    // Not necessary here
   }
 
   @Override

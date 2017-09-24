@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.aspect.Failsafe;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.util.Arrays;
 

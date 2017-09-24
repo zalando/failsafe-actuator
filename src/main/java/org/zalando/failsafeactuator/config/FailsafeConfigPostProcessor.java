@@ -25,7 +25,7 @@ public class FailsafeConfigPostProcessor implements BeanDefinitionRegistryPostPr
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
     FailsafeConfig failsafeConfig = getFailsafeConfig();
     failsafeConfig.populateBreakersWithDefaultsIfNecessary();
-    log.info("{}", failsafeConfig);
+    log.debug("{}", failsafeConfig);
   }
 
   @SneakyThrows

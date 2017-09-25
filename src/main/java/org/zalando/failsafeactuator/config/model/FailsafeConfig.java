@@ -44,8 +44,8 @@ public class FailsafeConfig {
   @Data
   @AllArgsConstructor
   public static class Threshold {
-    private Integer executions;
     private Integer threshold;
+    private Integer executions;
 
     public Threshold(Integer threshold) {
       this(threshold, threshold);

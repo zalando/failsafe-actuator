@@ -26,7 +26,7 @@ public class ThresholdConverter implements Converter<String, FailsafeConfig.Thre
       case 2:
         threshold = sections[0].trim();
         String executions = sections[1].trim();
-        return new FailsafeConfig.Threshold(parseInt(threshold, parseInt(executions)));
+        return new FailsafeConfig.Threshold(parseInt(threshold), parseInt(executions));
       default:
         throw new IllegalArgumentException("configuration must have 1 or 2 parameters separate by ','");
     }

@@ -34,25 +34,25 @@ public class FailsafeConfigurationTest {
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
   @Test
-  public void default_delay_is_1_minute() throws Exception {
+  public void defaultDelayIs1Minute() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getDelay()).isEqualToComparingFieldByField(new Duration(60000, TimeUnit.MILLISECONDS));
   }
 
   @Test
-  public void default_failure_threshold_is_20() throws Exception {
+  public void defaultFailureThresholdIs20() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getFailureThreshold()).isEqualToComparingFieldByField(new Ratio(20, 20));
   }
 
   @Test
-  public void default_success_threshold_is_1() throws Exception {
+  public void defaultSuccessThresholdIs1() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getSuccessThreshold()).isEqualToComparingFieldByField(new Ratio(1, 1));
   }
 
   @Test
-  public void default_timeout_is_null() throws Exception {
+  public void defaultTimeoutIsNull() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getTimeout()).isNull();
   }

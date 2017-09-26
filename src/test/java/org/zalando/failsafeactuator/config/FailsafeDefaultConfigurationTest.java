@@ -35,49 +35,49 @@ public class FailsafeDefaultConfigurationTest {
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
   @Test
-  public void default_delay_is_10_seconds() throws Exception {
+  public void defaultDelayIs10Seconds() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getDelay()).isEqualToComparingFieldByField(new Duration(10000, TimeUnit.MILLISECONDS));
   }
 
   @Test
-  public void default_failure_threshold_is_1_and_10() throws Exception {
+  public void defaultFailureThresholdIs1And10() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getFailureThreshold()).isEqualToComparingFieldByField(new Ratio(1, 10));
   }
 
   @Test
-  public void default_success_threshold_is_2_and_20() throws Exception {
+  public void defaultSuccessThresholdIs2And20() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getSuccessThreshold()).isEqualToComparingFieldByField(new Ratio(2, 20));
   }
 
   @Test
-  public void default_timeout_is_20_seconds() throws Exception {
+  public void defaultTimeoutIs20Seconds() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("default");
     assertThat(breaker.getTimeout()).isEqualToComparingFieldByField(new Duration(20000, TimeUnit.MILLISECONDS));
   }
 
   @Test
-  public void custom_breaker_delay_is_15_seconds() throws Exception {
+  public void customBreakerDelayIs15Seconds() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("test");
     assertThat(breaker.getDelay()).isEqualToComparingFieldByField(new Duration(15000, TimeUnit.MILLISECONDS));
   }
 
   @Test
-  public void custom_breaker_failure_threshold_is_2_and_12() throws Exception {
+  public void customBreaker_failureThresholdIs2And12() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("test");
     assertThat(breaker.getFailureThreshold()).isEqualToComparingFieldByField(new Ratio(2, 12));
   }
 
   @Test
-  public void custom_breaker_success_threshold_is_3_and_22() throws Exception {
+  public void customBreakerSuccessThresholdIs3And22() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("test");
     assertThat(breaker.getSuccessThreshold()).isEqualToComparingFieldByField(new Ratio(3, 22));
   }
 
   @Test
-  public void custom_breaker_timeout_is_25_seconds() throws Exception {
+  public void customBreakerTimeoutIs25Seconds() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("test");
     assertThat(breaker.getTimeout()).isEqualToComparingFieldByField(new Duration(25000, TimeUnit.MILLISECONDS));
   }

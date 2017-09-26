@@ -65,7 +65,7 @@ public class FailsafeDefaultConfigurationTest {
   }
 
   @Test
-  public void customBreaker_failureThresholdIs2And12() throws Exception {
+  public void customBreakerFailureThresholdIs2And12() throws Exception {
     CircuitBreaker breaker = circuitBreakerRegistry.getOrCreate("test");
     assertThat(breaker.getFailureThreshold()).isEqualToComparingFieldByField(new Ratio(2, 12));
   }

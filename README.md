@@ -76,6 +76,40 @@ public class MyBean {
 }
 ```
 
+You could protect as well a method call directly
+
+```
+
+@Component
+public class MyBean {
+    
+        @FailsafeBreaker(value = "WhatABreak")
+        public String myBrokenCall() {
+          throw new NullPointerException("by intention broken");
+        }
+        
+}
+```
+
+and use a fallback method in case the circuit is open
+
+```
+
+@Component
+public class MyBean {
+    
+        @FailsafeBreaker(value = "WhatABreak", fallbackMethod = "myFallback")
+        public String myBrokenCall() {
+          throw new NullPointerException("by intention broken");
+        }
+        
+        public String myFallback() {
+          return "fallback used!";
+        }
+        
+}
+```
+
 The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
 
 The generated output will look like this:

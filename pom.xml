@@ -21,13 +21,19 @@
         <dependency>
 			<groupId>net.jodah</groupId>
 			<artifactId>failsafe</artifactId>
-            <version>0.8.1</version>
+            <version>1.0.4</version>
 			<scope>compile</scope>
 		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
             <version>1.5.2.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.10</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -50,10 +56,10 @@
             <version>1.5.2.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-            <version>4.12</version>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.8.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -139,6 +145,14 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
@@ -178,6 +192,12 @@
 			<name>Mahdi Modabber</name>
 			<organization>Zalando SE</organization>
 			<email>mahdi.modabber@zalando.de</email>
+		</developer>
+		<developer>
+			<id>pdaum</id>
+			<name>Peter Daumr</name>
+			<organization>Zalando SE</organization>
+			<email>peter.daum@zalando.de</email>
 		</developer>
 	</developers>
 

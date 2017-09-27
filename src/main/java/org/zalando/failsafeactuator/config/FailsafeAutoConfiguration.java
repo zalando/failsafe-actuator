@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
@@ -32,12 +33,18 @@ public class FailsafeAutoConfiguration {
 
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
-  @Autowired
   private MetricRegistry metricRegistry;
 
   @Bean
+  public MetricRegistry metricRegistry() {
+    this.metricRegistry = new MetricRegistry();
+    return this.metricRegistry;
+  }
+
+  @Bean
+  @DependsOn("metricRegistry")
   public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry(metricRegistry);
+    circuitBreakerRegistry = new CircuitBreakerRegistry(this.metricRegistry);
     return circuitBreakerRegistry;
   }
 

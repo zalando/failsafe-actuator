@@ -11,6 +11,7 @@
 package org.zalando.failsafeactuator.config;
 
 import com.codahale.metrics.MetricRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
@@ -31,6 +32,7 @@ public class FailsafeAutoConfiguration {
 
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
+  @Autowired
   private MetricRegistry metricRegistry;
 
   @Bean

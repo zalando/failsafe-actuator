@@ -10,6 +10,7 @@
  */
 package org.zalando.failsafeactuator.service;
 
+import com.codahale.metrics.MetricRegistry;
 import net.jodah.failsafe.CircuitBreaker;
 
 import org.junit.Before;
@@ -23,7 +24,7 @@ public class CircuitBreakerRegistryTest {
 
   @Before
   public void init() {
-    registry = new CircuitBreakerRegistry();
+    registry = new CircuitBreakerRegistry(new MetricRegistry());
   }
 
   @Test(expected = IllegalArgumentException.class)

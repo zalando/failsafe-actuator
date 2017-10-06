@@ -31,18 +31,9 @@ public class FailsafeAutoConfiguration {
 
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
-  private MetricRegistry metricRegistry;
-
   @Bean
-  public MetricRegistry metricRegistry() {
-    this.metricRegistry = new MetricRegistry();
-    return this.metricRegistry;
-  }
-
-  @Bean
-  @DependsOn("metricRegistry")
-  public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry(this.metricRegistry);
+  public CircuitBreakerRegistry circuitBreakerRegistry(final MetricRegistry metricRegistry) {
+    circuitBreakerRegistry = new CircuitBreakerRegistry(metricRegistry);
     return circuitBreakerRegistry;
   }
 

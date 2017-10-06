@@ -41,12 +41,12 @@ so if you find an interesting "Help Wanted" issue then please drop us a line in 
 To use Failsafe Actuator, add the following dependency to your project:
 
 **Gradle:**
-```
+```groovy
 compile("org.zalando:failsafe-actuator:0.4.1")
 ```
 
 **Maven:**
-```
+```xml
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
@@ -56,16 +56,15 @@ compile("org.zalando:failsafe-actuator:0.4.1")
 
 Then autowire the `CircuitBreaker` by using:
 
-```
+```java
 @Autowired
-@FailsafeBreaker(value = "WhatABreak")
+@FailsafeBreaker("WhatABreak")
 CircuitBreaker breaker;
 ```
 
 This will inject a new instance of a circuit breaker to your bean and register it for monitoring. Example:
 
-```
-
+```java
 @Component
 public class MyBean {
     
@@ -80,13 +79,13 @@ The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/pro
 
 The generated output will look like this:
 
-```
+```json
 [{"name":"WhatABreak","closed":true,"open":false,"half_open":false}]
 ```
 
 ### How to Build on Your Own
 
-```
+```bash
 gradle build
 ```
 

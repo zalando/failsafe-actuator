@@ -11,11 +11,17 @@
 package org.zalando.failsafeactuator.config;
 
 import com.codahale.metrics.MetricRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ConditionContext;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
@@ -30,8 +36,15 @@ public class FailsafeAutoConfiguration {
   private MetricRegistry metricRegistry;
 
   @Bean
+  public MetricRegistry metricRegistry() {
+    this.metricRegistry = new MetricRegistry();
+    return this.metricRegistry;
+  }
+
+  @Bean
+  @DependsOn("metricRegistry")
   public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry(metricRegistry);
+    circuitBreakerRegistry = new CircuitBreakerRegistry(this.metricRegistry);
     return circuitBreakerRegistry;
   }
 

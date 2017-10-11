@@ -36,8 +36,8 @@ public class DropwizardMetric implements PublicMetrics {
   @PostConstruct
   public void init() {
     for (final String identifier : circuitBreakerRegistry.getConcurrentBreakerMap().keySet()) {
-      final Meter successMeter = metricRegistry.meter(SUCCESS + identifier);
-      final Meter failureMeter = metricRegistry.meter(FAILURE + identifier);
+      final Meter successMeter = metricRegistry.meter(identifier + SUCCESS);
+      final Meter failureMeter = metricRegistry.meter(identifier + FAILURE);
       metricMap.put(identifier, Arrays.asList(successMeter, failureMeter));
       Failsafe.with(circuitBreakerRegistry.getConcurrentBreakerMap().get(identifier))
           .with(new DropwizardListener(failureMeter, successMeter));

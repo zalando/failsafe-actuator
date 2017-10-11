@@ -10,18 +10,12 @@
  */
 package org.zalando.failsafeactuator.service;
 
-import com.codahale.metrics.MetricRegistry;
-import net.jodah.failsafe.CircuitBreaker;
-
-import org.springframework.util.Assert;
-import org.zalando.failsafeactuator.domain.*;
-import org.zalando.failsafeactuator.domain.FailsafeBreaker;
-import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.annotation.PreDestroy;
+import net.jodah.failsafe.CircuitBreaker;
+import org.springframework.util.Assert;
+import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /**
  * Registry which holds a reference to registered circuit breakers.
@@ -33,11 +27,9 @@ public class CircuitBreakerRegistry {
   private static final String ALREADY_REGISTERED_ERROR = "There was a Circuit-Breaker registered already with name : %s ";
 
   private final Map<String, CircuitBreaker> concurrentBreakerMap;
-  private final MetricRegistry metricRegistry;
 
-  public CircuitBreakerRegistry(MetricRegistry metricRegistry) {
-    this.metricRegistry = metricRegistry;
-    this.concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+  public CircuitBreakerRegistry() {
+    concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
   }
 
   /**
@@ -61,7 +53,7 @@ public class CircuitBreakerRegistry {
    * @return returns the referenced {@link Map}
    */
   public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
-    return this.concurrentBreakerMap;
+    return concurrentBreakerMap;
   }
 
   /**
@@ -71,7 +63,7 @@ public class CircuitBreakerRegistry {
    * @return new Instance of a {@link CircuitBreaker}
    */
   private CircuitBreaker createCircuitBreaker(final String identifier) {
-    final CircuitBreaker breaker = new FailsafeBreaker(metricRegistry, identifier);
+    final CircuitBreaker breaker = new CircuitBreaker();
     registerCircuitBreaker(breaker, identifier);
     return breaker;
   }

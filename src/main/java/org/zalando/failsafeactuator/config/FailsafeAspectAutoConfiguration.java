@@ -10,38 +10,30 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import net.jodah.failsafe.CircuitBreaker;
-
-import org.springframework.beans.factory.InjectionPoint;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.zalando.failsafeactuator.aspect.FailsafeBreakerAspect;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
-import org.zalando.failsafeactuator.aspect.Failsafe;
 
-import java.lang.annotation.Annotation;
-
-/** Configuration class which enables the usage of {@link Failsafe} annotation. */
+@EnableAspectJAutoProxy
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
-public class FailsafeInjectionConfiguration {
-
-  @Autowired
-  private CircuitBreakerRegistry circuitBreakerRegistry;
+public class FailsafeAspectAutoConfiguration {
 
   @Bean
-  @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
-    Failsafe annotation = null;
-    for (Annotation a : ip.getAnnotations()) {
-      if (a instanceof Failsafe) {
-        annotation = (Failsafe) a;
-        break;
-      }
-    }
-    return circuitBreakerRegistry.getOrCreate(annotation.value());
+  public FailsafeBreakerAspect failsafeBreakerAspect(CircuitBreakerRegistry circuitBreakerRegistry) {
+    return new FailsafeBreakerAspect(circuitBreakerRegistry);
+  }
+
+  @Bean
+  public Advisor failsafeBreakerPointcutAdvisor(FailsafeBreakerAspect failsafeBreakerAspect) {
+    AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+    pointcut.setExpression("@annotation(org.zalando.failsafeactuator.aspect.Failsafe)");
+    return new DefaultPointcutAdvisor(pointcut, failsafeBreakerAspect);
   }
 }

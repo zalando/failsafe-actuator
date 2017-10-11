@@ -31,6 +31,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.10</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<!-- Lombok will not be used on the live system, it is only used when 
@@ -55,10 +61,10 @@
             <version>1.5.2.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-            <version>4.12</version>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.8.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -144,6 +150,14 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
@@ -183,6 +197,12 @@
 			<name>Mahdi Modabber</name>
 			<organization>Zalando SE</organization>
 			<email>mahdi.modabber@zalando.de</email>
+		</developer>
+		<developer>
+			<id>pdaum</id>
+			<name>Peter Daumr</name>
+			<organization>Zalando SE</organization>
+			<email>peter.daum@zalando.de</email>
 		</developer>
 	</developers>
 

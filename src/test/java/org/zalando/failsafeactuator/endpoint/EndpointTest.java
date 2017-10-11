@@ -10,8 +10,12 @@
  */
 package org.zalando.failsafeactuator.endpoint;
 
-import net.jodah.failsafe.CircuitBreaker;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.aspect.Failsafe;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
-
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -71,7 +69,8 @@ public class EndpointTest {
   }
 
   private CircuitBreakerState fetchCircuitBreaker() {
-    final ResponseEntity<CircuitBreakerState[]> result = restTemplate.getForEntity(String.format(FAILSAFE_URL, port), CircuitBreakerState[].class);
+    final ResponseEntity<CircuitBreakerState[]> result =
+        restTemplate.getForEntity(String.format(FAILSAFE_URL, port), CircuitBreakerState[].class);
 
     return Arrays.asList(result.getBody()).get(0);
   }

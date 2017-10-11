@@ -14,12 +14,8 @@ import javax.annotation.PostConstruct;
 import net.jodah.failsafe.Failsafe;
 import org.springframework.boot.actuate.endpoint.PublicMetrics;
 import org.springframework.boot.actuate.metrics.Metric;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
-import org.springframework.stereotype.Component;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
-@Component
-@ConditionalOnMissingClass("PublicMetrics")
 public class DropwizardMetric implements PublicMetrics {
 
   private static final String SUCCESS = ".success";
@@ -33,7 +29,7 @@ public class DropwizardMetric implements PublicMetrics {
   public DropwizardMetric(
       final MetricRegistry metricRegistry, final CircuitBreakerRegistry circuitBreakerRegistry) {
     this.metricRegistry = metricRegistry;
-    metricMap = new ConcurrentHashMap<String, List<Meter>>();
+    metricMap = new ConcurrentHashMap<>();
     this.circuitBreakerRegistry = circuitBreakerRegistry;
   }
 
@@ -48,12 +44,13 @@ public class DropwizardMetric implements PublicMetrics {
     }
   }
 
+  @Override
   public Collection<Metric<?>> metrics() {
     final List metricList = new ArrayList();
     for (final String key : metricMap.keySet()) {
       for (final Meter meter : metricMap.get(key)) {
         final Metric metric =
-            new Metric<Integer>(
+            new Metric<>(
                 key, new BigDecimal(meter.getCount()).intValue(), Calendar.getInstance().getTime());
         metricList.add(metric);
       }

@@ -10,19 +10,24 @@
  */
 package org.zalando.failsafeactuator.service;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+/** Annotation which is used to inject an instance of a Circuit Breaker. */
 @Target({METHOD, PARAMETER, FIELD})
 @Retention(RUNTIME)
 @Documented
 public @interface FailsafeBreaker {
-
+  /**
+   * Unique identifier of the circuit breaker
+   *
+   * @return
+   */
   String value();
 }

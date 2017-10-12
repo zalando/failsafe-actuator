@@ -15,7 +15,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
 		<java.version>1.8</java.version>
+		<spring-boot.version>2.0.0.M5</spring-boot.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
         <dependency>
@@ -27,7 +39,7 @@
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-            <version>1.5.2.RELEASE</version>
+            <version>${spring-boot.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -41,13 +53,13 @@
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-            <version>1.5.2.RELEASE</version>
+            <version>${spring-boot.version}</version>
 			<scope>test</scope>
 		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.2.RELEASE</version>
+            <version>${spring-boot.version}</version>
 			<scope>test</scope>
 		</dependency>
         <dependency>

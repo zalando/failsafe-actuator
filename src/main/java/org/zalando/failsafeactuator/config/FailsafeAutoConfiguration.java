@@ -46,14 +46,12 @@ public class FailsafeAutoConfiguration {
   }
 
   @Bean
-  @DependsOn("metricRegistry")
   public DropwizardMetric createMetric(final MetricRegistry metricRegistry) {
     return new DropwizardMetric(metricRegistry, circuitBreakerRegistry);
   }
 
   @Bean
-  @DependsOn("circuitBreakerRegistry")
-  public FailsafeEndpoint createEndpoint() {
+  public FailsafeEndpoint createEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry) {
     return new FailsafeEndpoint(circuitBreakerRegistry);
   }
 

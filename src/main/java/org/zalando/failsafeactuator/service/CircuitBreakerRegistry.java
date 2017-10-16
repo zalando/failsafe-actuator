@@ -13,10 +13,13 @@ package org.zalando.failsafeactuator.service;
 import net.jodah.failsafe.CircuitBreaker;
 
 import org.springframework.util.Assert;
+import org.zalando.failsafeactuator.config.model.FailsafeConfig;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PreDestroy;
 
@@ -30,6 +33,7 @@ public class CircuitBreakerRegistry {
   private static final String ALREADY_REGISTERED_ERROR = "There was a Circuit-Breaker registered already with name : %s ";
 
   private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+  private FailsafeConfig failsafeConfig;
 
   /**
    * Will put the {@link CircuitBreaker} into the registry. There is no check which avoids overwriting of identifiers. Therefore be sure that your identifiers
@@ -63,6 +67,28 @@ public class CircuitBreakerRegistry {
    */
   private CircuitBreaker createCircuitBreaker(final String identifier) {
     final CircuitBreaker breaker = new CircuitBreaker();
+
+    FailsafeConfig.Breaker config = failsafeConfig.getConfigForBreaker(identifier);
+    Duration delay = config.getDelay();
+    if (delay != null) {
+      breaker.withDelay(delay.toMillis(), TimeUnit.MILLISECONDS);
+    }
+
+    Duration duration = config.getTimeout();
+    if (duration != null) {
+      breaker.withTimeout(duration.toMillis(), TimeUnit.MILLISECONDS);
+    }
+
+    FailsafeConfig.Threshold successThreshold = config.getSuccessThreshold();
+    if(successThreshold != null) {
+      breaker.withSuccessThreshold(successThreshold.getThreshold(), successThreshold.getExecutions());
+    }
+
+    FailsafeConfig.Threshold failureThreshold = config.getFailureThreshold();
+    if(failureThreshold != null) {
+      breaker.withFailureThreshold(failureThreshold.getThreshold(), failureThreshold.getExecutions());
+    }
+
     registerCircuitBreaker(breaker, identifier);
     return breaker;
   }
@@ -85,5 +111,9 @@ public class CircuitBreakerRegistry {
   @PreDestroy
   public void destroy() throws Exception {
     concurrentBreakerMap.clear();
+  }
+
+  public void setFailsafeConfig(FailsafeConfig failsafeConfig) {
+    this.failsafeConfig = failsafeConfig;
   }
 }

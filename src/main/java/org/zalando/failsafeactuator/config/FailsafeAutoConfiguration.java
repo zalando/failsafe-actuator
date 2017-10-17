@@ -31,11 +31,15 @@ import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeAutoConfiguration {
 
-
   @Bean
   @ConditionalOnMissingBean(MetricRegistry.class)
   public MetricRegistry metricRegistry() {
     return new MetricRegistry();
+  }
+
+  @Bean
+  public CircuitBreakerRegistry circuitBreakerRegistry() {
+    return new CircuitBreakerRegistry();
   }
 
   @Bean

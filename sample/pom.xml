@@ -37,7 +37,7 @@
     <dependencies>
         <dependency>
             <groupId>org.zalando</groupId>
-            <artifactId>failsafe-actuator-library</artifactId>
+            <artifactId>failsafe-actuator</artifactId>
             <version>0.4.1</version>
         </dependency>
         <dependency>

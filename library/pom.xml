@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.zalando</groupId>
-	<artifactId>failsafe-actuator-library</artifactId>
+	<artifactId>failsafe-actuator</artifactId>
 	<version>0.4.1</version>
 	<packaging>jar</packaging>
 
@@ -13,7 +13,7 @@
 
     <parent>
       <groupId>org.zalando</groupId>
-	  <artifactId>failsafe-actuator</artifactId>
+	  <artifactId>failsafe-actuator-parent</artifactId>
 	   <version>0.4.1</version>
     </parent>
     

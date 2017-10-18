@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.zalando</groupId>
+	<artifactId>failsafe-actuator-sample</artifactId>
+	<version>0.4.1</version>
+	<packaging>jar</packaging>
+
+	<name>Failsafe-Actuator-Sample</name>
+    <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
+
+    <parent>
+      <groupId>org.zalando</groupId>
+	  <artifactId>failsafe-actuator</artifactId>
+	   <version>0.4.1</version>
+    </parent>
+
+    <dependencies>
+	    <dependency>
+	        <groupId>org.zalando</groupId>
+	        <artifactId>failsafe-actuator-library</artifactId>
+	        <version>0.4.1</version>
+	    </dependency>
+    </dependencies>
+
+</project>

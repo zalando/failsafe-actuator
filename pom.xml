@@ -140,6 +140,23 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.5.8.RELEASE</version>
+				<executions>
+				<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+					<configuration>
+						<classifier>exec</classifier>
+					</configuration>
+				</execution>
+				</executions>
+			</plugin>
+
+
 		</plugins>
 	</build>
 

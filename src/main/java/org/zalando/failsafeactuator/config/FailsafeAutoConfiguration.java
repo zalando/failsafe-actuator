@@ -18,30 +18,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
-import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 /** Autoconfiguration for the FailsafeEndpoint. */
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeAutoConfiguration {
 
-  private CircuitBreakerRegistry circuitBreakerRegistry;
-
-  @Bean
-  public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry();
-    return circuitBreakerRegistry;
-  }
-
-  @Bean
-  @DependsOn("circuitBreakerRegistry")
-  public FailsafeEndpoint createEndpoint() {
-    return new FailsafeEndpoint(circuitBreakerRegistry);
-  }
-
+	@Bean
+	public FailsafeEndpoint createEndpoint() {
+	   return new FailsafeEndpoint();
+	}
+	
   /** Condition to check that the Failsafe endpoint is enabled */
   static class FailsafeCondition extends SpringBootCondition {
     @Override

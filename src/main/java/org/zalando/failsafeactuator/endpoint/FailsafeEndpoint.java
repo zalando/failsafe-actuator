@@ -10,16 +10,19 @@
  */
 package org.zalando.failsafeactuator.endpoint;
 
-import net.jodah.failsafe.CircuitBreaker;
-
-import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
-import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
+
+import net.jodah.failsafe.CircuitBreaker;
 
 /**
  * Implementation of {@link AbstractEndpoint} for Failsafe purposes.
@@ -32,16 +35,17 @@ import java.util.Map;
 public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>> {
 
   private static final String ENDPOINT_ID = "failsafe";
-  private final CircuitBreakerRegistry circuitBreakerRegistry;
-
-  public FailsafeEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry) {
+  
+  @Autowired
+  private ApplicationContext applicationContext;
+  
+  public FailsafeEndpoint() {
     super(ENDPOINT_ID);
-    this.circuitBreakerRegistry = circuitBreakerRegistry;
   }
 
   @Override
   public List<CircuitBreakerState> invoke() {
-    final Map<String, CircuitBreaker> breakerMap = this.circuitBreakerRegistry.getConcurrentBreakerMap();
+    final Map<String, CircuitBreaker> breakerMap = this.applicationContext.getBeansOfType(CircuitBreaker.class);
     final List<CircuitBreakerState> breakerStates = new ArrayList<CircuitBreakerState>();
 
     final List<String> breakersToRemove = new ArrayList<String>();
@@ -61,8 +65,9 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
   }
 
   private void removeUnreferencedBreakers(final List<String> breakersToRemove) {
+	AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
     for (final String identifier : breakersToRemove) {
-      this.circuitBreakerRegistry.getConcurrentBreakerMap().remove(identifier);
+    	((DefaultListableBeanFactory) factory).destroySingleton(identifier);
     }
   }
 }

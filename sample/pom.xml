@@ -9,7 +9,7 @@
     <version>0.4.1</version>
 
     <name>Failsafe-Actuator-Sample</name>
-    <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
+    <description>Sample application for Failsafe-Actuator</description>
 
     <parent>
         <groupId>org.zalando</groupId>

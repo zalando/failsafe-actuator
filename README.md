@@ -94,7 +94,7 @@ gradle build
 ```bash
 mvn compile install -Dgpg.skip
 cd sample
-mvn spring:boot:run
+mvn spring-boot:run
 ```
 
 ## License

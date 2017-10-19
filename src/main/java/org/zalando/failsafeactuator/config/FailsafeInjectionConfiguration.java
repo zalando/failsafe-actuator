@@ -10,31 +10,33 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import net.jodah.failsafe.CircuitBreaker;
+import java.lang.annotation.Annotation;
 
 import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
+import org.zalando.failsafeactuator.service.CircuitBreakerFactory;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
-import java.lang.annotation.Annotation;
+import net.jodah.failsafe.CircuitBreaker;
 
 /** Configuration class which enables the usage of {@link FailsafeBreaker} annotation. */
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeInjectionConfiguration {
 
-  @Autowired
-  private CircuitBreakerRegistry circuitBreakerRegistry;
-
+	@Autowired
+	private ApplicationContext applicationContext;
+	
   @Bean
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
+  public CircuitBreaker circuitBreaker(InjectionPoint ip) throws Exception {
     FailsafeBreaker annotation = null;
     for (Annotation a : ip.getAnnotations()) {
       if (a instanceof FailsafeBreaker) {
@@ -42,6 +44,9 @@ public class FailsafeInjectionConfiguration {
         break;
       }
     }
-    return circuitBreakerRegistry.getOrCreate(annotation.value());
+    
+    CircuitBreakerFactory circuitBreakerFactory = new CircuitBreakerFactory();
+    AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
+    return (CircuitBreaker) factory.initializeBean(circuitBreakerFactory.getObject(), annotation.value());
   }
 }

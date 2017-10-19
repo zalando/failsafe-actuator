@@ -14,16 +14,23 @@ import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /** Autoconfiguration for the FailsafeEndpoint. */
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeAutoConfiguration {
 
+	@Bean
+	public FailsafeEndpoint createEndpoint() {
+	   return new FailsafeEndpoint();
+	}
+	
   /** Condition to check that the Failsafe endpoint is enabled */
   static class FailsafeCondition extends SpringBootCondition {
     @Override

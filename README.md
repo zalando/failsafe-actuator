@@ -29,6 +29,8 @@ Find more details about our development plans in the [Issues Tracker](https://gi
 We're [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), 
 so if you find an interesting "Help Wanted" issue then please drop us a line in the related issue to claim it and begin working.
 
+Unless you explicitly state otherwise in advance, any non trivial contribution intentionally submitted for inclusion in this project by you to the steward of this repository (Zalando SE, Berlin) shall be under the terms and conditions of the MIT License, without any additional copyright information, terms or conditions.
+
 ## Getting Started
 
 ### Dependencies/Requirements

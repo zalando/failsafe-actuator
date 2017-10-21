@@ -6,6 +6,7 @@
 	<groupId>org.zalando</groupId>
 	<artifactId>failsafe-actuator</artifactId>
 	<version>0.4.1</version>
+	<classifier>sb2</classifier>
 	<packaging>jar</packaging>
 
 	<name>Failsafe-Actuator</name>
@@ -139,23 +140,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>1.5.8.RELEASE</version>
-				<executions>
-				<execution>
-					<goals>
-						<goal>repackage</goal>
-					</goals>
-					<configuration>
-						<classifier>exec</classifier>
-					</configuration>
-				</execution>
-				</executions>
-			</plugin>
-
 
 		</plugins>
 	</build>

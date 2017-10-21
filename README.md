@@ -94,7 +94,6 @@ gradle build
 ### Running the sample application
 
 ```bash
-mvn compile install -Dgpg.skip
 cd sample
 mvn spring-boot:run
 ```

@@ -9,16 +9,19 @@ public class SampleApplicationBanner implements Banner {
 
     @Override
     public void printBanner(Environment environment, Class<?> sourceClass, PrintStream out) {
-        out.println("Failsafe-Actuator sample applicaton is running!");
-        out.println();
-        out.println("See the circuit breaker status:");
-        out.println("   $ curl http://127.0.0.1:8080/failsafe");
-        out.println("Unreliable endpoint that fails every second invocation:");
-        out.println("   $ curl http://127.0.0.1:8080/unreliable");
-        out.println("Endpoint with fallback:");
-        out.println("   $ curl http://127.0.0.1:8080/reliable");
-        out.println("Endpoint with fallback and 5 second circuit breaker delay:");
-        out.println("   $ curl http://127.0.0.1:8080/reliableWithDelay");
+        String port = environment.getProperty("server.port");
+        String banner = "";
+        banner += "Failsafe-Actuator sample applicaton is running!\n";
+        banner += "\n";
+        banner += "See the circuit breaker status:\n";
+        banner += "   $ curl http://127.0.0.1:" + port + "/failsafe\n";
+        banner += "Unreliable endpoint that fails every second invocation:\n";
+        banner += "   $ curl http://127.0.0.1:" + port + "/unreliable\n";
+        banner += "Reliable endpoint using a circuit breaker and fallback:\n";
+        banner += "   $ curl http://127.0.0.1:" + port + "/reliable\n";
+        banner += "Reliable endpoint using a circuit breaker with 5 second delay and fallback:\n";
+        banner += "   $ curl http://127.0.0.1:" + port + "/reliableWithDelay\n";
+        out.print(banner);
     }
 
 }

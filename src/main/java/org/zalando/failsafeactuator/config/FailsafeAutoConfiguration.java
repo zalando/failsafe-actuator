@@ -30,8 +30,6 @@ import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeAutoConfiguration {
 
-  private CircuitBreakerRegistry circuitBreakerRegistry;
-
   @Bean
   public DropwizardMetric dropwizardMetric(
       final MetricReader metricReader, final CircuitBreakerRegistry circuitBreakerRegistry) {
@@ -40,13 +38,16 @@ public class FailsafeAutoConfiguration {
 
   @Bean
   public CircuitBreakerRegistry circuitBreakerRegistry() {
-    circuitBreakerRegistry = new CircuitBreakerRegistry();
-    return circuitBreakerRegistry;
+    return new CircuitBreakerRegistry();
   }
 
   @Bean
-  @DependsOn("circuitBreakerRegistry")
-  public FailsafeEndpoint createEndpoint() {
+  public DropwizardMetric createMetric(final MetricRegistry metricRegistry, final CircuitBreakerRegistry circuitBreakerRegistry) {
+    return new DropwizardMetric(metricRegistry, circuitBreakerRegistry);
+  }
+
+  @Bean
+  public FailsafeEndpoint createEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry) {
     return new FailsafeEndpoint(circuitBreakerRegistry);
   }
 

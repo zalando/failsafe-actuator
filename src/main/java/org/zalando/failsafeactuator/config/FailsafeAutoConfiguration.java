@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 import org.zalando.failsafeactuator.metrics.DropwizardMetric;
@@ -40,12 +39,7 @@ public class FailsafeAutoConfiguration {
   public CircuitBreakerRegistry circuitBreakerRegistry() {
     return new CircuitBreakerRegistry();
   }
-
-  @Bean
-  public DropwizardMetric createMetric(final MetricRegistry metricRegistry, final CircuitBreakerRegistry circuitBreakerRegistry) {
-    return new DropwizardMetric(metricRegistry, circuitBreakerRegistry);
-  }
-
+  
   @Bean
   public FailsafeEndpoint createEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry) {
     return new FailsafeEndpoint(circuitBreakerRegistry);

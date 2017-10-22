@@ -27,6 +27,8 @@ import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.boot.actuate.metrics.CounterService;
+import org.zalando.failsafeactuator.metrics.DropwizardListener;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 @Slf4j
@@ -34,6 +36,7 @@ import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 public class FailsafeBreakerAspect implements MethodInterceptor {
 
   private final CircuitBreakerRegistry circuitBreakerRegistry;
+  private final CounterService counterService;
 
   @Override
   public Object invoke(final MethodInvocation methodInvocation) throws Throwable {
@@ -41,9 +44,11 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
     final org.zalando.failsafeactuator.aspect.Failsafe breaker =
         method.getAnnotation(org.zalando.failsafeactuator.aspect.Failsafe.class);
 
+
     final CircuitBreaker circuitBreaker = circuitBreakerRegistry.getOrCreate(breaker.value());
     try {
       return Failsafe.with(circuitBreaker)
+          .with(new DropwizardListener<>(counterService))
           .get(
               new Callable<Object>() {
                 @Override

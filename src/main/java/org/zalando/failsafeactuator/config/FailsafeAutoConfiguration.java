@@ -13,7 +13,6 @@ package org.zalando.failsafeactuator.config;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
@@ -55,8 +54,7 @@ public class FailsafeAutoConfiguration {
     }
 
     private boolean isEnabled(ConditionContext context, String prefix, boolean defaultValue) {
-      RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(context.getEnvironment(), prefix);
-      return resolver.getProperty("enabled", Boolean.class, defaultValue);
+      return context.getEnvironment().getProperty(prefix + ".enabled", Boolean.class, defaultValue);
     }
   }
 }

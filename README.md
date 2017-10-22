@@ -33,7 +33,7 @@ so if you find an interesting "Help Wanted" issue then please drop us a line in 
 
 ### Dependencies/Requirements
 * Java 8
-* [Spring Boot](http://projects.spring.io/spring-boot/) 
+* [Spring Boot 2](http://projects.spring.io/spring-boot/) 
 * [Failsafe](https://github.com/jhalterman/failsafe)
 
 ### Running/Using
@@ -76,7 +76,7 @@ public class MyBean {
 }
 ```
 
-The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
+The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/application/failsafe**_.
 
 The generated output will look like this:
 

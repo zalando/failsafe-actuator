@@ -48,7 +48,7 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
     final CircuitBreaker circuitBreaker = circuitBreakerRegistry.getOrCreate(breaker.value());
     try {
       return Failsafe.with(circuitBreaker)
-          .with(new DropwizardListener<>(counterService))
+          .with(new DropwizardListener<>(counterService, breaker.value()))
           .get(
               new Callable<Object>() {
                 @Override

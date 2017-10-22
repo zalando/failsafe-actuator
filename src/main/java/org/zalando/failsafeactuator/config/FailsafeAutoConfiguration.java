@@ -10,10 +10,9 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import com.codahale.metrics.MetricRegistry;
+import org.springframework.boot.actuate.metrics.reader.MetricReader;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
@@ -34,21 +33,15 @@ public class FailsafeAutoConfiguration {
   private CircuitBreakerRegistry circuitBreakerRegistry;
 
   @Bean
-  @ConditionalOnMissingBean(MetricRegistry.class)
-  public MetricRegistry metricRegistry() {
-    return new MetricRegistry();
+  public DropwizardMetric dropwizardMetric(
+      final MetricReader metricReader, final CircuitBreakerRegistry circuitBreakerRegistry) {
+    return new DropwizardMetric(metricReader, circuitBreakerRegistry);
   }
 
   @Bean
   public CircuitBreakerRegistry circuitBreakerRegistry() {
     circuitBreakerRegistry = new CircuitBreakerRegistry();
     return circuitBreakerRegistry;
-  }
-
-  @Bean
-  @DependsOn("metricRegistry")
-  public DropwizardMetric createMetric(final MetricRegistry metricRegistry) {
-    return new DropwizardMetric(metricRegistry, circuitBreakerRegistry);
   }
 
   @Bean

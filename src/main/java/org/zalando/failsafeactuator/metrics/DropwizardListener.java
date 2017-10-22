@@ -1,13 +1,13 @@
 package org.zalando.failsafeactuator.metrics;
 
-import static org.zalando.failsafeactuator.metrics.DropwizardMetric.FAILURE;
-import static org.zalando.failsafeactuator.metrics.DropwizardMetric.SUCCESS;
-
 import net.jodah.failsafe.ExecutionContext;
 import net.jodah.failsafe.Listeners;
 import org.springframework.boot.actuate.metrics.CounterService;
 
 public class DropwizardListener<R> extends Listeners<R> {
+
+  public static final String SUCCESS = ".success";
+  public static final String FAILURE = ".failure";
 
   private final CounterService counterService;
   private final String identifier;

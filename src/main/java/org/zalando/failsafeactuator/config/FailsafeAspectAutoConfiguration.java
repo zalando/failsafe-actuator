@@ -21,6 +21,7 @@ package org.zalando.failsafeactuator.config;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,8 @@ public class FailsafeAspectAutoConfiguration {
 
   @Bean
   public FailsafeBreakerAspect failsafeBreakerAspect(
-      final CircuitBreakerRegistry circuitBreakerRegistry) {
-    return new FailsafeBreakerAspect(circuitBreakerRegistry);
+      final CircuitBreakerRegistry circuitBreakerRegistry, final CounterService counterService) {
+    return new FailsafeBreakerAspect(circuitBreakerRegistry, counterService);
   }
 
   @Bean

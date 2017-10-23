@@ -1,13 +1,3 @@
-/**
- * The MIT License (MIT)
- * Copyright (c) 2016 Zalando SE
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package org.zalando.failsafeactuator.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
@@ -45,17 +35,20 @@ public class FailsafeAutoConfiguration {
   /** Condition to check that the Failsafe endpoint is enabled */
   static class FailsafeCondition extends SpringBootCondition {
     @Override
-    public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
-      boolean endpointsEnabled = isEnabled(context, "endpoints.", true);
-      ConditionMessage.Builder message = ConditionMessage.forCondition("Failsafe");
+    public ConditionOutcome getMatchOutcome(
+        final ConditionContext context, final AnnotatedTypeMetadata metadata) {
+      final boolean endpointsEnabled = isEnabled(context, "endpoints.", true);
+      final ConditionMessage.Builder message = ConditionMessage.forCondition("Failsafe");
       if (isEnabled(context, "endpoints.failsafe.", endpointsEnabled)) {
         return ConditionOutcome.match(message.because("enabled"));
       }
       return ConditionOutcome.noMatch(message.because("not enabled"));
     }
 
-    private boolean isEnabled(ConditionContext context, String prefix, boolean defaultValue) {
-      RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(context.getEnvironment(), prefix);
+    private boolean isEnabled(
+        final ConditionContext context, final String prefix, final boolean defaultValue) {
+      final RelaxedPropertyResolver resolver =
+          new RelaxedPropertyResolver(context.getEnvironment(), prefix);
       return resolver.getProperty("enabled", Boolean.class, defaultValue);
     }
   }

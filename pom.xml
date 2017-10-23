@@ -6,7 +6,6 @@
 	<groupId>org.zalando</groupId>
 	<artifactId>failsafe-actuator</artifactId>
 	<version>0.4.1</version>
-	<classifier>sb2</classifier>
 	<packaging>jar</packaging>
 
 	<name>Failsafe-Actuator</name>
@@ -61,6 +60,23 @@
 
 	<build>
 		<plugins>
+			<plugin>
+        			<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-jar-plugin</artifactId>
+        			<version>3.0.2</version>
+        			<executions>
+          				<execution>
+            					<phase>package</phase>
+            					<goals>
+             					 	<goal>jar</goal>
+            					</goals>
+            					<configuration>
+              						<classifier>sb2</classifier>
+              					</configuration>
+          				</execution>
+       	 			</executions>
+      			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>

@@ -30,7 +30,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointTest {
 
   private static final String FAILSAFE_URL = "http://localhost:%d/failsafe";

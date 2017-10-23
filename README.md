@@ -91,6 +91,13 @@ The generated output will look like this:
 gradle build
 ```
 
+### Running the sample application
+
+```bash
+cd sample
+mvn spring-boot:run
+```
+
 ## License
 
 This code is released under the MIT license. See [License](LICENSE).

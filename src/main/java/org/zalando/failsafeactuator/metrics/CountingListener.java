@@ -3,15 +3,21 @@ package org.zalando.failsafeactuator.metrics;
 import net.jodah.failsafe.Listeners;
 import org.springframework.boot.actuate.metrics.CounterService;
 
-public class DropwizardListener<R> extends Listeners<R> {
+/**
+ * Implementation of {@link Listeners} which invokes Springs {@link CounterService} to count the
+ * successful and failed calls.
+ *
+ * @param <R>
+ */
+public class CountingListener<R> extends Listeners<R> {
 
-  static final String SUCCESS = ".success";
-  static final String FAILURE = ".failure";
+  public static final String SUCCESS = ".success";
+  public static final String FAILURE = ".failure";
 
   private final CounterService counterService;
   private final String identifier;
 
-  public DropwizardListener(final CounterService counterService, final String identifier) {
+  public CountingListener(final CounterService counterService, final String identifier) {
     this.counterService = counterService;
     this.identifier = identifier;
   }

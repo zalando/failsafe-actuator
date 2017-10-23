@@ -1,7 +1,7 @@
 package org.zalando.failsafeactuator.metrics;
 
-import static org.zalando.failsafeactuator.metrics.DropwizardListener.FAILURE;
-import static org.zalando.failsafeactuator.metrics.DropwizardListener.SUCCESS;
+import static org.zalando.failsafeactuator.metrics.CountingListener.FAILURE;
+import static org.zalando.failsafeactuator.metrics.CountingListener.SUCCESS;
 
 import java.util.ArrayList;
 import java.util.Collection;

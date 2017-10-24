@@ -34,6 +34,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+	</repositories>
+	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -42,7 +44,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
-	</repositories>
+	</pluginRepositories>
 
 	<dependencies>
         <dependency>

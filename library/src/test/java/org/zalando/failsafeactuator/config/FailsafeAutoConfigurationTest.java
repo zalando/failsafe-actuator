@@ -57,7 +57,8 @@ public class FailsafeAutoConfigurationTest {
     public static class CircuitBreakerConstructorInjection {
       private final CircuitBreaker breaker;
 
-      public CircuitBreakerConstructorInjection(@Failsafe("constructor") CircuitBreaker breaker) {
+      public CircuitBreakerConstructorInjection(
+          @Failsafe("constructor") final CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }
@@ -74,7 +75,7 @@ public class FailsafeAutoConfigurationTest {
       private CircuitBreaker breaker;
 
       @Autowired
-      public void setBreaker(@Failsafe("setter") CircuitBreaker breaker) {
+      public void setBreaker(@Failsafe("setter") final CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }

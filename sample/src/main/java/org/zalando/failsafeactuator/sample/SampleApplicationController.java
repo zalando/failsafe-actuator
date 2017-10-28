@@ -1,26 +1,24 @@
 package org.zalando.failsafeactuator.sample;
 
+import java.util.concurrent.TimeUnit;
+import javax.annotation.PostConstruct;
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
-
-import javax.annotation.PostConstruct;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 public class SampleApplicationController {
     private boolean shouldFail = false;
 
-    @Autowired
-    @FailsafeBreaker(value = "testBreaker")
-    private CircuitBreaker breaker;
+  @Autowired
+  @org.zalando.failsafeactuator.aspect.Failsafe(value = "testBreaker")
+  private CircuitBreaker breaker;
 
-    @Autowired
-    @FailsafeBreaker(value = "delayBreaker")
-    private CircuitBreaker delayBreaker;
+  @Autowired
+  @org.zalando.failsafeactuator.aspect.Failsafe(value = "delayBreaker")
+  private CircuitBreaker delayBreaker;
 
     @PostConstruct
     private void init() {

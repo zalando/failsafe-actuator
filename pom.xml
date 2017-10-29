@@ -7,7 +7,7 @@
 
 	<groupId>org.zalando</groupId>
 	<artifactId>failsafe-actuator</artifactId>
-	<version>0.5.1</version>
+	<version>0.5.0</version>
 	<packaging>jar</packaging>
 
 	<name>Failsafe-Actuator</name>

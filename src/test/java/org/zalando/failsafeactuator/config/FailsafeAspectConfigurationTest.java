@@ -25,16 +25,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.zalando.failsafeactuator.FailsafeSampleApp;
 import org.zalando.failsafeactuator.aspect.Failsafe;
+import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigurationTestConfiguration;
 import org.zalando.failsafeactuator.config.FailsafeAspectConfigurationTest.FailsafeAutoConfigurationTestConfiguration.FailsafeBreakerMethodProtection;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(
+  classes = {FailsafeSampleApp.class, FailsafeAutoConfigurationTestConfiguration.class}
+)
 public class FailsafeAspectConfigurationTest {
 
   @Autowired private FailsafeBreakerMethodProtection methodProtection;
@@ -59,8 +61,6 @@ public class FailsafeAspectConfigurationTest {
   }
 
   @Configuration
-  @Import(FailsafeAutoConfiguration.class)
-  @ComponentScan
   public static class FailsafeAutoConfigurationTestConfiguration {
 
     @Component

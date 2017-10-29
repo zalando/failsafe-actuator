@@ -18,14 +18,9 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.actuate.metrics.reader.MetricReader;
-import org.springframework.boot.actuate.metrics.repository.InMemoryMetricRepository;
-import org.springframework.boot.actuate.metrics.writer.DefaultCounterService;
-import org.springframework.boot.actuate.metrics.writer.MetricWriter;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
@@ -41,18 +36,6 @@ import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 @Configuration
 @Conditional(FailsafeAutoConfiguration.FailsafeCondition.class)
 public class FailsafeAutoConfiguration {
-
-  @Bean
-  @ConditionalOnMissingBean(MetricWriter.class)
-  public MetricWriter metricWriter() {
-    return new InMemoryMetricRepository();
-  }
-
-  @Bean
-  @ConditionalOnMissingBean(CounterService.class)
-  public CounterService counterService(MetricWriter metricWriter) {
-    return new DefaultCounterService(metricWriter);
-  }
 
   @Bean
   public DropwizardMetric dropwizardMetric(

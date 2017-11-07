@@ -10,15 +10,12 @@
  */
 package org.zalando.failsafeactuator.service;
 
-import net.jodah.failsafe.CircuitBreaker;
-
-import org.springframework.util.Assert;
-import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.annotation.PreDestroy;
+import net.jodah.failsafe.CircuitBreaker;
+import org.springframework.util.Assert;
+import org.zalando.failsafeactuator.endpoint.FailsafeEndpoint;
 
 /**
  * Registry which holds a reference to registered circuit breakers.
@@ -29,7 +26,11 @@ public class CircuitBreakerRegistry {
 
   private static final String ALREADY_REGISTERED_ERROR = "There was a Circuit-Breaker registered already with name : %s ";
 
-  private final Map<String, CircuitBreaker> concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+  private final Map<String, CircuitBreaker> concurrentBreakerMap;
+
+  public CircuitBreakerRegistry() {
+    concurrentBreakerMap = new ConcurrentHashMap<String, CircuitBreaker>();
+  }
 
   /**
    * Will put the {@link CircuitBreaker} into the registry. There is no check which avoids overwriting of identifiers. Therefore be sure that your identifiers
@@ -52,7 +53,7 @@ public class CircuitBreakerRegistry {
    * @return returns the referenced {@link Map}
    */
   public Map<String, CircuitBreaker> getConcurrentBreakerMap() {
-    return this.concurrentBreakerMap;
+    return concurrentBreakerMap;
   }
 
   /**

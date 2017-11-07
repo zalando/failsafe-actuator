@@ -10,26 +10,25 @@
  */
 package org.zalando.failsafeactuator.config;
 
-import net.jodah.failsafe.CircuitBreaker;
+import static org.junit.Assert.assertNotNull;
 
+import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.zalando.failsafeactuator.FailsafeSampleApp;
 import org.zalando.failsafeactuator.aspect.Failsafe;
+import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerConstructorInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerFieldInjection;
 import org.zalando.failsafeactuator.config.FailsafeAutoConfigurationTest.FailsafeAutoConfigraionTestConfiguration.CircuitBreakerSetterInjection;
 
-import static org.junit.Assert.assertNotNull;
-
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = {FailsafeSampleApp.class, FailsafeAutoConfigraionTestConfiguration.class})
 public class FailsafeAutoConfigurationTest {
 
   @Autowired
@@ -60,15 +59,14 @@ public class FailsafeAutoConfigurationTest {
   }
 
   @Configuration
-  @Import(FailsafeAutoConfiguration.class)
-  @ComponentScan
   public static class FailsafeAutoConfigraionTestConfiguration {
 
     @Component
     public static class CircuitBreakerConstructorInjection {
       private final CircuitBreaker breaker;
 
-      public CircuitBreakerConstructorInjection(@Failsafe("constructor") CircuitBreaker breaker) {
+      public CircuitBreakerConstructorInjection(
+          @Failsafe("constructor") final CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }
@@ -85,7 +83,7 @@ public class FailsafeAutoConfigurationTest {
       private CircuitBreaker breaker;
 
       @Autowired
-      public void setBreaker(@Failsafe("setter") CircuitBreaker breaker) {
+      public void setBreaker(@Failsafe("setter") final CircuitBreaker breaker) {
         this.breaker = breaker;
       }
     }

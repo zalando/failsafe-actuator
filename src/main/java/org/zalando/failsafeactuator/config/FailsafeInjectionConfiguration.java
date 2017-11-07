@@ -10,8 +10,8 @@
  */
 package org.zalando.failsafeactuator.config;
 
+import java.lang.annotation.Annotation;
 import net.jodah.failsafe.CircuitBreaker;
-
 import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -19,10 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 import org.zalando.failsafeactuator.aspect.Failsafe;
-
-import java.lang.annotation.Annotation;
+import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 /** Configuration class which enables the usage of {@link Failsafe} annotation. */
 @Configuration
@@ -34,9 +32,9 @@ public class FailsafeInjectionConfiguration {
 
   @Bean
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-  public CircuitBreaker circuitBreaker(InjectionPoint ip) {
+  public CircuitBreaker circuitBreaker(final InjectionPoint ip) {
     Failsafe annotation = null;
-    for (Annotation a : ip.getAnnotations()) {
+    for (final Annotation a : ip.getAnnotations()) {
       if (a instanceof Failsafe) {
         annotation = (Failsafe) a;
         break;

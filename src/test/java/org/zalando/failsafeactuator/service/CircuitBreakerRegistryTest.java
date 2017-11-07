@@ -11,7 +11,6 @@
 package org.zalando.failsafeactuator.service;
 
 import net.jodah.failsafe.CircuitBreaker;
-
 import org.junit.Before;
 import org.junit.Test;
 

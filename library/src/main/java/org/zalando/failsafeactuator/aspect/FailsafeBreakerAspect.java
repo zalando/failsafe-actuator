@@ -56,7 +56,7 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
     final CircuitBreaker circuitBreaker = circuitBreakerRegistry.getOrCreate(breaker.value());
     try {
 
-      if(method.getReturnType().isInstance(Future.class)) {
+      if(method.getReturnType().isAssignableFrom(CompletableFuture.class)) {
         if(executor == null) {
           //TODO: introduce property to resolve
           executor = new ScheduledThreadPoolExecutor(100);

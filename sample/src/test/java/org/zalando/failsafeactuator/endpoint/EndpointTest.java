@@ -11,35 +11,32 @@
 package org.zalando.failsafeactuator.endpoint;
 
 import net.jodah.failsafe.CircuitBreaker;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
-import java.util.Arrays;
+import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointTest {
 
-  private static final String FAILSAFE_URL = "http://localhost:%d/failsafe";
+  private static final String FAILSAFE_URL = "/failsafe";
 
   private static final String BREAKER_NAME = "testBreaker";
-
-  @LocalServerPort
-  private int port;
 
   @Autowired
   private TestRestTemplate restTemplate;
@@ -50,30 +47,24 @@ public class EndpointTest {
 
   @Test
   public void endpointTest() {
-    CircuitBreakerState state = fetchCircuitBreaker();
-    assertTrue(state.isClosed());
-    assertFalse(state.isOpen());
-    assertFalse(state.isHalfOpen());
-    assertEquals(BREAKER_NAME, state.getName());
+    Map<String, CircuitBreakerState> state = fetchCircuitBreaker();
+    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
+    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.CLOSED));
 
     breaker.open();
     state = fetchCircuitBreaker();
-    assertFalse(state.isClosed());
-    assertTrue(state.isOpen());
-    assertFalse(state.isHalfOpen());
-    assertEquals(BREAKER_NAME, state.getName());
+    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
+    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.OPEN));
 
     breaker.halfOpen();
     state = fetchCircuitBreaker();
-    assertFalse(state.isClosed());
-    assertFalse(state.isOpen());
-    assertTrue(state.isHalfOpen());
-    assertEquals(BREAKER_NAME, state.getName());
+    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
+    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.HALF_OPEN));
   }
 
-  private CircuitBreakerState fetchCircuitBreaker() {
-    final ResponseEntity<CircuitBreakerState[]> result = restTemplate.getForEntity(String.format(FAILSAFE_URL, port), CircuitBreakerState[].class);
+  private Map<String, CircuitBreakerState> fetchCircuitBreaker() {
+    ParameterizedTypeReference<Map<String, CircuitBreakerState>> typeReference = new ParameterizedTypeReference<Map<String, CircuitBreakerState>>() { };
 
-    return Arrays.asList(result.getBody()).get(0);
+    return restTemplate.exchange(FAILSAFE_URL, HttpMethod.GET, HttpEntity.EMPTY, typeReference).getBody();
   }
 }

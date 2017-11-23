@@ -4,9 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator-sample</artifactId>
-    <version>0.4.1</version>
 
     <name>Failsafe-Actuator-Sample</name>
     <description>Sample application for Failsafe-Actuator</description>
@@ -14,7 +12,7 @@
     <parent>
         <groupId>org.zalando</groupId>
         <artifactId>failsafe-actuator-parent</artifactId>
-        <version>0.4.1</version>
+        <version>0.5.0</version>
     </parent>
 
     <build>
@@ -38,7 +36,7 @@
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>failsafe-actuator</artifactId>
-            <version>0.4.1</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

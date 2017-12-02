@@ -21,10 +21,14 @@ package org.zalando.failsafeactuator.aspect;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
+import net.jodah.failsafe.FailsafeException;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.boot.actuate.metrics.CounterService;
@@ -38,28 +42,38 @@ public class FailsafeBreakerAspect implements MethodInterceptor {
   private final CircuitBreakerRegistry circuitBreakerRegistry;
   private final CounterService counterService;
 
+  private ScheduledThreadPoolExecutor executor;
+
   @Override
   public Object invoke(final MethodInvocation methodInvocation) throws Throwable {
     final Method method = methodInvocation.getMethod();
+
     final org.zalando.failsafeactuator.aspect.Failsafe breaker =
         method.getAnnotation(org.zalando.failsafeactuator.aspect.Failsafe.class);
 
 
     final CircuitBreaker circuitBreaker = circuitBreakerRegistry.getOrCreate(breaker.value());
     try {
-      return Failsafe.with(circuitBreaker)
-          .with(new CountingListener<>(counterService, breaker.value()))
-          .get(
-              new Callable<Object>() {
-                @Override
-                public Object call() throws Exception {
-                  try {
-                    return methodInvocation.proceed();
-                  } catch (final Throwable throwable) {
-                    throw new FailsafeBreakerWrappedException(throwable);
-                  }
-                }
-              });
+
+      if(method.getReturnType().isAssignableFrom(CompletableFuture.class)) {
+        if(executor == null) {
+          //TODO: introduce property to resolve
+          executor = new ScheduledThreadPoolExecutor(100);
+        }
+        return Failsafe.with(circuitBreaker)
+                .with(new CountingListener<>(counterService, breaker.value()))
+                .with(executor).future((Callable<CompletableFuture<Object>>) methodInvocation.proceed());
+      } else {
+        return Failsafe.with(circuitBreaker)
+                .with(new CountingListener<>(counterService, breaker.value()))
+                .get(() -> {
+                          try {
+                            return methodInvocation.proceed();
+                          } catch (final Throwable throwable) {
+                            throw new FailsafeException(throwable);
+                          }
+                        });
+      }
     } catch (final RuntimeException e) {
       final String fallbackMethodName = breaker.fallbackMethod();
       if (!fallbackMethodName.isEmpty()) {

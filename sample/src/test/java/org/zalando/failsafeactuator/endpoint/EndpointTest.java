@@ -25,9 +25,8 @@ import org.zalando.failsafeactuator.service.FailsafeBreaker;
 
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
@@ -48,18 +47,18 @@ public class EndpointTest {
   @Test
   public void endpointTest() {
     Map<String, CircuitBreakerState> state = fetchCircuitBreaker();
-    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
-    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.CLOSED));
+    assertNotEquals(state.get(BREAKER_NAME), null);
+    assertEquals(state.get(BREAKER_NAME).getState(), CircuitBreaker.State.CLOSED);
 
     breaker.open();
     state = fetchCircuitBreaker();
-    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
-    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.OPEN));
+    assertNotEquals(state.get(BREAKER_NAME), null);
+    assertEquals(state.get(BREAKER_NAME).getState(), CircuitBreaker.State.OPEN);
 
     breaker.halfOpen();
     state = fetchCircuitBreaker();
-    assertThat(state.get(BREAKER_NAME), is(not(nullValue())));
-    assertThat(state.get(BREAKER_NAME).getState(), equalTo(CircuitBreaker.State.HALF_OPEN));
+    assertNotEquals(state.get(BREAKER_NAME), null);
+    assertEquals(state.get(BREAKER_NAME).getState(), CircuitBreaker.State.HALF_OPEN);
   }
 
   private Map<String, CircuitBreakerState> fetchCircuitBreaker() {

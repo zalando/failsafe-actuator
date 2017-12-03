@@ -1,6 +1,7 @@
 package org.zalando.failsafeactuator.endpoint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.jodah.failsafe.CircuitBreaker;
@@ -18,7 +19,7 @@ import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
  * @author mpickhan on 29.06.16.
  */
 @ConfigurationProperties(prefix = "endpoints.failsafe")
-public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>> {
+public class FailsafeEndpoint extends AbstractEndpoint<Map<String, CircuitBreakerState>> {
 
   private static final String ENDPOINT_ID = "failsafe";
   private final CircuitBreakerRegistry circuitBreakerRegistry;
@@ -31,7 +32,7 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
   }
 
   @Override
-  public List<CircuitBreakerState> invoke() {
+  public Map<String, CircuitBreakerState> invoke() {
     final Map<String, CircuitBreaker> breakerMap = circuitBreakerRegistry.getConcurrentBreakerMap();
 
     if(!breakerMap.isEmpty()) {
@@ -65,7 +66,7 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
   }
 
   private List<CircuitBreakerState> handleWithMap(final Map<String, CircuitBreaker> breakerMap) {
-    final List<CircuitBreakerState> breakerStates = new ArrayList<>();
+    final Map<String, CircuitBreakerState> breakerStates = new HashMap<>();
 
     final List<String> breakersToRemove = new ArrayList<>();
     for (final String identifier : breakerMap.keySet()) {
@@ -75,8 +76,8 @@ public class FailsafeEndpoint extends AbstractEndpoint<List<CircuitBreakerState>
         breakersToRemove.add(identifier);
       } else {
         final CircuitBreakerState state =
-                new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen(), breaker.getState().equals(CircuitBreaker.State.HALF_OPEN));
-        breakerStates.add(state);
+                new CircuitBreakerState(identifier, breaker.getState());
+        breakerStates.put(identifier, state);
       }
     }
     removeUnreferencedBreakers(breakersToRemove);

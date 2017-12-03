@@ -46,20 +46,18 @@ public class FailsafeEndpoint extends AbstractEndpoint<Map<String, CircuitBreake
   private Map<String, CircuitBreakerState> handleWithApplicationContext() {
     final Map<String, CircuitBreakerState> breakerStates = new HashMap<>();
 
-    final String[] beanNamesForType = context.getBeanNamesForType(CircuitBreaker.class);
+    final Map<String, CircuitBreaker> beanNamesForType = context.getBeansOfType(CircuitBreaker.class);
 
     if(beanNamesForType == null) {
       return breakerStates;
     }
 
-    for(int i = 0; i < beanNamesForType.length; i++) {
-      String identifier = beanNamesForType[i];
-      CircuitBreaker breaker = context.getBean(beanNamesForType[i], CircuitBreaker.class);
-      if(breaker != null) {
-        final CircuitBreakerState state =
-                new CircuitBreakerState(identifier, breaker.getState());
-        breakerStates.put(identifier, state);
-      }
+    for(String key : beanNamesForType.keySet()) {
+      CircuitBreaker breaker = beanNamesForType.get(key);
+
+      final CircuitBreakerState state =
+              new CircuitBreakerState(key, breaker.getState());
+      breakerStates.put(key, state);
     }
 
     return breakerStates;

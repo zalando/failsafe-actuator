@@ -15,7 +15,7 @@ import static net.jodah.failsafe.CircuitBreaker.State.OPEN;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FailsafeEndpointTest {
+public class FailsafeEndpointRegistryTest {
 
   private static final String BREAKER_NAME = "TEST";
   private final ObjectMapper mapper = new ObjectMapper();
@@ -23,7 +23,7 @@ public class FailsafeEndpointTest {
   private final FailsafeEndpoint endpoint;
   private final CircuitBreakerRegistry circuitBreakerRegistry;
 
-  public FailsafeEndpointTest() {
+  public FailsafeEndpointRegistryTest() {
     circuitBreakerRegistry = new CircuitBreakerRegistry();
     endpoint = new FailsafeEndpoint(circuitBreakerRegistry, new GenericApplicationContext());
   }

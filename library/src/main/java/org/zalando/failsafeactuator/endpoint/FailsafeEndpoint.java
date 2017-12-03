@@ -43,13 +43,13 @@ public class FailsafeEndpoint extends AbstractEndpoint<Map<String, CircuitBreake
 
   }
 
-  private List<CircuitBreakerState> handleWithApplicationContext() {
-    List<CircuitBreakerState> resultList = new ArrayList<>();
+  private Map<String, CircuitBreakerState> handleWithApplicationContext() {
+    final Map<String, CircuitBreakerState> breakerStates = new HashMap<>();
 
     final String[] beanNamesForType = context.getBeanNamesForType(CircuitBreaker.class);
 
     if(beanNamesForType == null) {
-      return resultList;
+      return breakerStates;
     }
 
     for(int i = 0; i < beanNamesForType.length; i++) {
@@ -57,15 +57,15 @@ public class FailsafeEndpoint extends AbstractEndpoint<Map<String, CircuitBreake
       CircuitBreaker breaker = context.getBean(beanNamesForType[i], CircuitBreaker.class);
       if(breaker != null) {
         final CircuitBreakerState state =
-                new CircuitBreakerState(identifier, breaker.isClosed(), breaker.isOpen(), breaker.getState().equals(CircuitBreaker.State.HALF_OPEN));
-        resultList.add(state);
+                new CircuitBreakerState(identifier, breaker.getState());
+        breakerStates.put(identifier, state);
       }
     }
 
-    return resultList;
+    return breakerStates;
   }
 
-  private List<CircuitBreakerState> handleWithMap(final Map<String, CircuitBreaker> breakerMap) {
+  private Map<String, CircuitBreakerState> handleWithMap(final Map<String, CircuitBreaker> breakerMap) {
     final Map<String, CircuitBreakerState> breakerStates = new HashMap<>();
 
     final List<String> breakersToRemove = new ArrayList<>();

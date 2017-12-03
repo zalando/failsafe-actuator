@@ -57,9 +57,13 @@ public class CircuitBreakerRegistry {
   /**
    * Returns the registered {@link CircuitBreaker} for the given identifier or creates a new one.
    *
+   * @deprecated This method shouldn't be used anymore. Failsafe-Actuator relies on Spring Context in the future
+   * therefore you should instantiate your Circuit Breaker by creating a {@link org.springframework.context.annotation.Bean}.
+   * This method will be dropped in future versions.
    * @param identifier which will be shown in the output of the {@link FailsafeEndpoint}.
    * @return an already registered or a new Instance of a {@link CircuitBreaker}
    */
+  @Deprecated
   public CircuitBreaker getOrCreate(final String identifier) {
     Assert.hasText(identifier, "Identifier for circuit breaker needs to be set");
     final CircuitBreaker circuitBreaker = concurrentBreakerMap.get(identifier);

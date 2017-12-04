@@ -82,7 +82,12 @@ The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/pro
 The generated output will look like this:
 
 ```json
-[{"name":"WhatABreak","closed":true,"open":false,"half_open":false}]
+{
+  "WhatABreak": {
+    "name": "WhatABreak",
+    "state": "OPEN"
+  }
+}
 ```
 
 ### How to Build on Your Own

@@ -7,8 +7,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class SampleApplication {
 
     public static void main(final String[] args) {
-    final SpringApplicationBuilder applicationBuilder =
-        new SpringApplicationBuilder(SampleApplication.class);
+        final SpringApplicationBuilder applicationBuilder =
+            new SpringApplicationBuilder(SampleApplication.class);
         applicationBuilder.banner(new SampleApplicationBanner()).logStartupInfo(false).run(args);
     }
 

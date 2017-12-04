@@ -6,7 +6,7 @@
 
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator-parent</artifactId>
-    <version>0.4.1</version>
+    <version>0.5.0</version>
     <packaging>pom</packaging>
 
     <name>Failsafe-Actuator</name>
@@ -36,14 +36,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <!-- Lombok will not be used on the live system, it is only used when
-                compiling, so we don't package it -->
-            <scope>provided</scope>
-            <version>1.16.18</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>1.5.2.RELEASE</version>
@@ -59,6 +51,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <version>2.2.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

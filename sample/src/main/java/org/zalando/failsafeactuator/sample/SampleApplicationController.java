@@ -3,6 +3,7 @@ package org.zalando.failsafeactuator.sample;
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zalando.failsafeactuator.service.FailsafeBreaker;
@@ -15,11 +16,11 @@ public class SampleApplicationController {
     private boolean shouldFail = false;
 
     @Autowired
-    @FailsafeBreaker(value = "testBreaker")
+    @Qualifier("testBreaker")
     private CircuitBreaker breaker;
 
     @Autowired
-    @FailsafeBreaker(value = "delayBreaker")
+    @Qualifier("delayBreaker")
     private CircuitBreaker delayBreaker;
 
     @PostConstruct

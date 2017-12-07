@@ -3,8 +3,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>org.zalando</groupId>
 	<artifactId>failsafe-actuator</artifactId>
-	<version>0.5.1</version>
+	<version>0.5.2</version>
 	<packaging>jar</packaging>
 
 	<name>Failsafe-Actuator-Library</name>

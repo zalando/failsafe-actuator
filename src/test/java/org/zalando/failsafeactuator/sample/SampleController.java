@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-public class SampleApplicationController {
+public class SampleController {
     private boolean shouldFail = false;
 
     @Autowired
@@ -19,7 +19,7 @@ public class SampleApplicationController {
     private CircuitBreaker breaker;
 
     @Autowired
-    @FailsafeBreaker(value = "delayBreaker")
+    @FailsafeBreaker("delayBreaker")
     private CircuitBreaker delayBreaker;
 
     @PostConstruct

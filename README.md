@@ -90,18 +90,15 @@ The generated output will look like this:
 }
 ```
 
-### How to Build on Your Own
+## Sample usage
 
-```bash
-gradle build
-```
+To see a sample on how to use it take a look at the
+[sample application](src/test/java/org/zalando/failsafeactuator/sample/SampleApplication.java).
+It starts a [Restcontroller](src/test/java/org/zalando/failsafeactuator/sample/SampleController.java)
+that shows how to autowire circuit-breaker into your application
+and then configure them.
 
-### Running the sample application
-
-```bash
-cd sample
-mvn spring-boot:run
-```
+The tests for this application can be found [here](src/test/java/org/zalando/failsafeactuator/sample/SampleEndpointTest.java).
 
 ## License
 

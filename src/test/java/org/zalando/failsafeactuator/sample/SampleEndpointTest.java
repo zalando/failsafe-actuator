@@ -8,7 +8,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.zalando.failsafeactuator.endpoint;
+package org.zalando.failsafeactuator.sample;
 
 import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class EndpointTest {
+public class SampleEndpointTest {
 
   private static final String FAILSAFE_URL = "/failsafe";
 

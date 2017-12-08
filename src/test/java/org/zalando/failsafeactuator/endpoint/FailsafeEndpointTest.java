@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
@@ -15,7 +14,7 @@ import static net.jodah.failsafe.CircuitBreaker.State.OPEN;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FailsafeEndpointRegistryTest {
+public class FailsafeEndpointTest {
 
   private static final String BREAKER_NAME = "TEST";
   private final ObjectMapper mapper = new ObjectMapper();
@@ -23,7 +22,7 @@ public class FailsafeEndpointRegistryTest {
   private final FailsafeEndpoint endpoint;
   private final CircuitBreakerRegistry circuitBreakerRegistry;
 
-  public FailsafeEndpointRegistryTest() {
+  public FailsafeEndpointTest() {
     circuitBreakerRegistry = new CircuitBreakerRegistry();
     endpoint = new FailsafeEndpoint(circuitBreakerRegistry, new GenericApplicationContext());
   }

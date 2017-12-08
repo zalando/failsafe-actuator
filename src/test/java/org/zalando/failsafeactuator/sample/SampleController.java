@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-public class SampleApplicationController {
+public class SampleController {
     private boolean shouldFail = false;
 
     @Autowired

@@ -5,6 +5,8 @@ import net.jodah.failsafe.CircuitBreaker;
 import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,7 @@ public class FailsafeInjectionConfiguration {
 
   @Bean
   @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+  @ConditionalOnMissingBean(CircuitBreaker.class)
   public CircuitBreaker circuitBreaker(final InjectionPoint ip) {
     FailsafeBreaker annotation = null;
     for (final Annotation a : ip.getAnnotations()) {
@@ -30,6 +33,7 @@ public class FailsafeInjectionConfiguration {
         break;
       }
     }
+
     return circuitBreakerRegistry.getOrCreate(annotation.value());
   }
 }

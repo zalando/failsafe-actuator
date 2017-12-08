@@ -5,7 +5,7 @@
 
 	<artifactId>failsafe-actuator</artifactId>
 	<packaging>jar</packaging>
-
+    <version>0.6.0</version>
 	<name>Failsafe-Actuator-Library</name>
     <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
 

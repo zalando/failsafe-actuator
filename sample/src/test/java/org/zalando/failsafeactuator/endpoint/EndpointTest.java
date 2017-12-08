@@ -11,6 +11,7 @@
 package org.zalando.failsafeactuator.endpoint;
 
 import net.jodah.failsafe.CircuitBreaker;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
@@ -68,3 +70,4 @@ public class EndpointTest {
     return restTemplate.exchange(FAILSAFE_URL, HttpMethod.GET, HttpEntity.EMPTY, typeReference).getBody();
   }
 }
+

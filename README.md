@@ -95,6 +95,14 @@ It starts a [Rest Controller](src/test/java/org/zalando/failsafeactuator/sample/
 that shows how to autowire `CircuitBreaker` into your application
 and configure them.
 
+## How to build on your own
+
+In order to build the JAR on your own run the following command:
+
+```bash
+mvn clean clean install
+```
+
 ## License
 
 This code is released under the MIT license. See [License](LICENSE).

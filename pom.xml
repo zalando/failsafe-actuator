@@ -7,7 +7,7 @@
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
     <version>0.6.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>Failsafe-Actuator</name>
     <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>

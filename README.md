@@ -75,8 +75,8 @@ public class MyBean {
 ```
 
 That's it. By calling the [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) via _**http://${yourAddress}/failsafe**_.
+you will get a response which looks like the following:
 
-The response will look like this:
 
 ```json
 {

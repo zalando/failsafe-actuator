@@ -1,9 +1,11 @@
 package org.zalando.failsafeactuator.sample;
 
 import net.jodah.failsafe.CircuitBreaker;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,6 +20,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = org.zalando.failsafeactuator.sample.SampleApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,7 +34,7 @@ public class SampleEndpointTest {
   private TestRestTemplate restTemplate;
 
   @Autowired
-  @FailsafeBreaker(BREAKER_NAME)
+  @Qualifier(BREAKER_NAME)
   private CircuitBreaker breaker;
 
   @Test
@@ -57,3 +60,4 @@ public class SampleEndpointTest {
     return restTemplate.exchange(FAILSAFE_URL, HttpMethod.GET, HttpEntity.EMPTY, typeReference).getBody();
   }
 }
+

@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target({METHOD, PARAMETER, FIELD})
 @Retention(RUNTIME)
 @Documented
+@Deprecated
 public @interface FailsafeBreaker {
 
   String value();

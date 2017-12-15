@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Test;
+import org.springframework.context.support.GenericApplicationContext;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
@@ -23,7 +24,7 @@ public class FailsafeEndpointTest {
 
   public FailsafeEndpointTest() {
     circuitBreakerRegistry = new CircuitBreakerRegistry();
-    endpoint = new FailsafeEndpoint(circuitBreakerRegistry);
+    endpoint = new FailsafeEndpoint(circuitBreakerRegistry, new GenericApplicationContext());
   }
 
   @Test

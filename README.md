@@ -8,7 +8,6 @@
 applications that use the [Failsafe](https://github.com/jhalterman/failsafe) library. 
 Using Failsafe Actuator will readily expose the state of your [Circuit Breakers](http://martinfowler.com/bliki/CircuitBreaker.html) (closed, open, half-open) 
 to your Spring Actuator endpoint without additional effort. 
-Use the `@FailsafeBreaker` annotation to inject a circuit breaker wherever you need one. 
 
 ## Core Technical Concepts/Inspiration
 
@@ -18,15 +17,10 @@ suddenly becomes unavailable, you can discover it immediately and take action. T
 
 ## Development Status/Project Roadmap
 This library is currently under development and used in production at [Zalando](https://jobs.zalando.com/tech/). 
-It will offer additional features in the future, such as metrics-gathering for:
-* failed requests past 1m/5m/15m
-* success requests past 1m/5m/15m
-* overall requests past 1m/5m/15m
-* easy configuration of Circuit Breaker and Policies
 
 Find more details about our development plans in the [Issues Tracker](https://github.com/zalando-incubator/failsafe-actuator/issues). 
 
-We're [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), 
+We're always [looking for contributors](https://github.com/zalando-incubator/failsafe-actuator/blob/master/CONTRIBUTIONS.md), 
 so if you find an interesting "Help Wanted" issue then please drop us a line in the related issue to claim it and begin working.
 
 Unless you explicitly state otherwise in advance, any non trivial contribution intentionally submitted for inclusion in this project by you to the steward of this repository (Zalando SE, Berlin) shall be under the terms and conditions of the MIT License, without any additional copyright information, terms or conditions.
@@ -44,7 +38,7 @@ To use Failsafe Actuator, add the following dependency to your project:
 
 **Gradle:**
 ```groovy
-compile("org.zalando:failsafe-actuator:0.4.1")
+compile("org.zalando:failsafe-actuator:${FAILSAFE-ACTUATOR-VERSION}")
 ```
 
 **Maven:**
@@ -52,34 +46,37 @@ compile("org.zalando:failsafe-actuator:0.4.1")
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>FAILSAFE-ACTUATOR-VERSION</version>
+    <version>${FAILSAFE-ACTUATOR-VERSION}</version>
 </dependency>
 ```
 
-Then autowire the `CircuitBreaker` by using:
+Create your `CircuitBreaker` by defining them as a `Bean`.
 
 ```java
-@Autowired
-@FailsafeBreaker("WhatABreak")
-CircuitBreaker breaker;
+@Configuration
+public class CircuitBreakerConfiguration {
+  @Bean("WhatABreak")
+  public CircuitBreaker createBreaker() {
+    return new CircuitBreaker();
+  }
+}
 ```
 
-This will inject a new instance of a circuit breaker to your bean and register it for monitoring. Example:
+You can use and configure the created `CircuitBreaker` by autowiring it in the class where it should be used.
+
 
 ```java
 @Component
 public class MyBean {
-    
         @Autowired
-        @FailsafeBreaker(value = "WhatABreak")
+        @Qualifier(value = "WhatABreak")
         private CircuitBreaker breaker;
-        
 }
 ```
 
-The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/failsafe**_.
+That's it. By calling the [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) via _**http://${yourAddress}/failsafe**_.
+you will get a response which looks like the following:
 
-The generated output will look like this:
 
 ```json
 {
@@ -90,15 +87,21 @@ The generated output will look like this:
 }
 ```
 
-## Sample usage
+## Example usage
 
-To see a sample on how to use it take a look at the
-[sample application](src/test/java/org/zalando/failsafeactuator/sample/SampleApplication.java).
-It starts a [Restcontroller](src/test/java/org/zalando/failsafeactuator/sample/SampleController.java)
-that shows how to autowire circuit-breaker into your application
-and then configure them.
+To see a complete example on how to use the library take a look at the
+[Sample Application](src/test/java/org/zalando/failsafeactuator/sample/SampleApplication.java).
+It starts a [Rest Controller](src/test/java/org/zalando/failsafeactuator/sample/SampleController.java)
+that shows how to autowire `CircuitBreaker` into your application
+and configure them.
 
-The tests for this application can be found [here](src/test/java/org/zalando/failsafeactuator/sample/SampleEndpointTest.java).
+## How to build on your own
+
+In order to build the JAR on your own run the following command:
+
+```bash
+mvn clean install
+```
 
 ## License
 

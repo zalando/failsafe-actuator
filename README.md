@@ -89,7 +89,7 @@ you will get a response which looks like the following:
 
 ## Example usage
 
-To see a complete example on how to use the libe take a look at the
+To see a complete example on how to use the library take a look at the
 [Sample Application](src/test/java/org/zalando/failsafeactuator/sample/SampleApplication.java).
 It starts a [Rest Controller](src/test/java/org/zalando/failsafeactuator/sample/SampleController.java)
 that shows how to autowire `CircuitBreaker` into your application
@@ -100,7 +100,7 @@ and configure them.
 In order to build the JAR on your own run the following command:
 
 ```bash
-mvn clean clean install
+mvn clean install
 ```
 
 ## License

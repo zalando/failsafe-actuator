@@ -1,5 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/97639870e76546cab6fd2597c583c0b1)](https://www.codacy.com/app/MALPI/failsafe-actuator?utm_source=github.com&utm_medium=referral&utm_content=zalando-incubator/failsafe-actuator&utm_campaign=badger)
-[![Build Status](https://travis-ci.org/zalando-incubator/failsafe-actuator.svg?branch=master)](https://travis-ci.org/zalando-incubator/failsafe-actuator)
+[![Build Status](https://travis-ci.org/zalando/failsafe-actuator.svg?branch=master)](https://travis-ci.org/zalando/failsafe-actuator)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zalando/failsafe-actuator.svg)](https://maven-badges.herokuapp.com/maven-central/org.zalando/failsafe-actuator)
 
 # Failsafe Actuator

@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointTest {
 
-  private static final String FAILSAFE_URL = "http://localhost:%d/application/failsafe";
+  private static final String FAILSAFE_URL = "http://localhost:%d/actuator/failsafe";
 
   private static final String BREAKER_NAME = "testBreaker";
 

@@ -77,7 +77,8 @@ public class MyBean {
 }
 ```
 
-The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is reachable via _**http://${yourAddress}/application/failsafe**_.
+The [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) is 
+reachable via _**http://${yourAddress}/actuator/failsafe**_.
 
 The generated output will look like this:
 

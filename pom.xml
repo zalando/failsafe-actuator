@@ -6,7 +6,7 @@
 
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>0.6.0</version>
+    <version>0.6.1</version>
     <packaging>jar</packaging>
 
     <name>Failsafe-Actuator</name>
@@ -59,6 +59,7 @@
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path-assert</artifactId>
             <version>2.2.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

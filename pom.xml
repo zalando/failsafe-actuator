@@ -17,34 +17,13 @@
 		<project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
 		<java.version>1.8</java.version>
         <maven.deploy.skip>true</maven.deploy.skip>
-		<spring-boot.version>2.0.0.RC1</spring-boot.version>
+		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
 	</properties>
 
     <modules>
         <module>library</module>
         <module>sample</module>
     </modules>
-
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencies>
         <dependency>

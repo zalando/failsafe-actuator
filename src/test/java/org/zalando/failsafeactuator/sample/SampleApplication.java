@@ -40,7 +40,7 @@ public class SampleApplication {
       banner += "Failsafe-Actuator sample applicaton is running!\n";
       banner += "\n";
       banner += "See the circuit breaker status:\n";
-      banner += "   $ curl http://127.0.0.1:" + port + "/failsafe\n";
+      banner += "   $ curl http://127.0.0.1:" + port + "/actuator/failsafe\n";
       banner += "Unreliable endpoint that fails every second invocation:\n";
       banner += "   $ curl http://127.0.0.1:" + port + "/unreliable\n";
       banner += "Reliable endpoint using a circuit breaker and fallback:\n";

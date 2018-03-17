@@ -10,7 +10,6 @@ public class CircuitBreakerState {
   public CircuitBreakerState() {  }
 
   public CircuitBreakerState(final String name, final CircuitBreaker.State state) {
-
     this.name = name;
     this.state = state;
   }

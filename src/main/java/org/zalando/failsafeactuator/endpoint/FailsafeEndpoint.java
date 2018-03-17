@@ -5,34 +5,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.jodah.failsafe.CircuitBreaker;
-import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.context.ApplicationContext;
 import org.zalando.failsafeactuator.endpoint.domain.CircuitBreakerState;
 import org.zalando.failsafeactuator.service.CircuitBreakerRegistry;
 
 /**
- * Implementation of {@link AbstractEndpoint} for Failsafe purposes.
+ * Implementation of {@link Endpoint} for Failsafe purposes.
  *
  * <p>It will return all names of registered {@link CircuitBreaker}'s and their state as JSON.
  *
  * @author mpickhan on 29.06.16.
  */
-@ConfigurationProperties(prefix = "endpoints.failsafe")
-public class FailsafeEndpoint extends AbstractEndpoint<Map<String, CircuitBreakerState>> {
+@Endpoint(id = "failsafe")
+public class FailsafeEndpoint {
 
-  private static final String ENDPOINT_ID = "failsafe";
   private final CircuitBreakerRegistry circuitBreakerRegistry;
   private final ApplicationContext context;
 
   public FailsafeEndpoint(final CircuitBreakerRegistry circuitBreakerRegistry, final ApplicationContext context) {
-    super(ENDPOINT_ID);
     this.circuitBreakerRegistry = circuitBreakerRegistry;
     this.context = context;
   }
 
-  @Override
-  public Map<String, CircuitBreakerState> invoke() {
+  @ReadOperation
+  public Map<String, CircuitBreakerState> listCircuitBreakerStates() {
     final Map<String, CircuitBreaker> breakerMap = circuitBreakerRegistry.getConcurrentBreakerMap();
 
     if(!breakerMap.isEmpty()) {

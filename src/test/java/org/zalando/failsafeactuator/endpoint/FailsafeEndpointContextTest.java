@@ -35,7 +35,7 @@ public class FailsafeEndpointContextTest {
 
   @Test
   public void suchesfullyRegisteredTest() {
-    Map<String, CircuitBreakerState> invoke = endpoint.invoke();
+    Map<String, CircuitBreakerState> invoke = endpoint.listCircuitBreakerStates();
 
     assertNotNull(invoke.get(CB_ONE));
     assertEquals(CB_ONE, invoke.get(CB_ONE).getName());

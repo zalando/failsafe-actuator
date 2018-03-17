@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotEquals;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SampleEndpointTest {
 
-  private static final String FAILSAFE_URL = "/failsafe";
+  private static final String FAILSAFE_URL = "/actuator/failsafe";
 
   private static final String BREAKER_NAME = "testBreaker";
 

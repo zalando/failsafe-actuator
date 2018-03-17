@@ -32,7 +32,7 @@ public class FailsafeEndpointTest {
     CircuitBreaker test = circuitBreakerRegistry.getOrCreate(BREAKER_NAME);
     test.close();
 
-    String output = mapper.writeValueAsString(endpoint.invoke());
+    String output = mapper.writeValueAsString(endpoint.listCircuitBreakerStates());
 
     verifyBreaker(output, BREAKER_NAME, CLOSED.toString());
   }
@@ -42,7 +42,7 @@ public class FailsafeEndpointTest {
     CircuitBreaker test = circuitBreakerRegistry.getOrCreate(BREAKER_NAME);
     test.open();
 
-    String output = mapper.writeValueAsString(endpoint.invoke());
+    String output = mapper.writeValueAsString(endpoint.listCircuitBreakerStates());
 
     verifyBreaker(output, BREAKER_NAME, OPEN.toString());
   }
@@ -52,7 +52,7 @@ public class FailsafeEndpointTest {
     CircuitBreaker test = circuitBreakerRegistry.getOrCreate(BREAKER_NAME);
     test.halfOpen();
 
-    String output = mapper.writeValueAsString(endpoint.invoke());
+    String output = mapper.writeValueAsString(endpoint.listCircuitBreakerStates());
 
     verifyBreaker(output, BREAKER_NAME, HALF_OPEN.toString());
 
@@ -69,7 +69,7 @@ public class FailsafeEndpointTest {
     open.open();
     closed.close();
 
-    String output = mapper.writeValueAsString(endpoint.invoke());
+    String output = mapper.writeValueAsString(endpoint.listCircuitBreakerStates());
 
     verifyBreaker(output, breaker_open, OPEN.toString());
     verifyBreaker(output, breaker_closed, CLOSED.toString());

@@ -6,7 +6,7 @@
 
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>0.6.1</version>
+    <version>0.6.1-sb2</version>
     <packaging>jar</packaging>
 
     <name>Failsafe-Actuator</name>
@@ -38,8 +38,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<!-- Lombok will not be used on the live system, it is only used when
-				compiling, so we don't package it -->
 			<scope>provided</scope>
             <version>1.16.18</version>
         </dependency>
@@ -77,22 +75,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>boot-2</classifier>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

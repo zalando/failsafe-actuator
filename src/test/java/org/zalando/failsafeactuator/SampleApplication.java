@@ -1,7 +1,5 @@
 package org.zalando.failsafeactuator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -11,8 +9,6 @@ import java.io.PrintStream;
 
 @SpringBootApplication
 public class SampleApplication {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SampleApplication.class);
 
     public static void main(final String[] args) {
         new SpringApplicationBuilder(SampleApplication.class)

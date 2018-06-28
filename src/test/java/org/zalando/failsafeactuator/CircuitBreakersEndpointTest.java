@@ -9,7 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.DefaultResponseErrorHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 
 import static net.jodah.failsafe.CircuitBreaker.State.CLOSED;
@@ -34,8 +37,14 @@ public class CircuitBreakersEndpointTest {
     @Autowired
     private TestRestTemplate http;
 
+    @PostConstruct
+    public void configure() {
+        this.http.getRestTemplate().setErrorHandler(new DefaultResponseErrorHandler());
+    }
+
     @Before
     public void before() {
+
         write("test", CLOSED);
     }
 
@@ -58,10 +67,9 @@ public class CircuitBreakersEndpointTest {
         assertEquals(CLOSED, view.getState());
     }
 
-    @Test
+    @Test(expected = HttpClientErrorException.class)
     public void shouldReadUnknown() {
-        final CircuitBreakerView unknown = readOne("unknown");
-        assertNull(unknown);
+        readOne("unknown");
     }
 
     @Test

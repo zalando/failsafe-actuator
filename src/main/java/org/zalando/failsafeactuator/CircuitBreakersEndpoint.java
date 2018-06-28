@@ -59,13 +59,14 @@ public class CircuitBreakersEndpoint {
 
     private Consumer<CircuitBreaker> transitioner(final CircuitBreaker.State state) {
         switch (state) {
+            case CLOSED:
+                return CircuitBreaker::close;
             case OPEN:
                 return CircuitBreaker::open;
             case HALF_OPEN:
                 return CircuitBreaker::halfOpen;
             default:
-                // to be able to cover this branch
-                return CircuitBreaker::close;
+                throw new UnsupportedOperationException("Unknown state: " + state);
         }
     }
 

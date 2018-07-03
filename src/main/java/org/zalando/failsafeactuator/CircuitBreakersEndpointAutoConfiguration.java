@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Configuration
-public class FailsafeAutoConfiguration {
+public class CircuitBreakersEndpointAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean

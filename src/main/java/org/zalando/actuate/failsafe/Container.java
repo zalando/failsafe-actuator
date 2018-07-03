@@ -9,5 +9,7 @@ import java.util.Map;
 @Value
 @AllArgsConstructor(onConstructor = @__(@JsonCreator))
 final class Container {
-    Map<String, CircuitBreakerView> circuitBreakers;
+
+    private final Map<String, CircuitBreakerView> circuitBreakers;
+
 }

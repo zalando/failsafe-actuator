@@ -1,4 +1,4 @@
-package org.zalando.failsafeactuator;
+package org.zalando.actuate.failsafe;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

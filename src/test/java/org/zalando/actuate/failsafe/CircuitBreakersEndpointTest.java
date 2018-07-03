@@ -1,4 +1,4 @@
-package org.zalando.failsafeactuator;
+package org.zalando.actuate.failsafe;
 
 import net.jodah.failsafe.CircuitBreaker;
 import org.junit.Before;

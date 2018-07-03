@@ -1,4 +1,4 @@
-package org.zalando.failsafeactuator;
+package org.zalando.actuate.failsafe;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;

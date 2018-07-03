@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.zalando.failsafeactuator.CircuitBreakersEndpointAutoConfiguration
+org.zalando.actuate.autoconfigure.failsafe.CircuitBreakersEndpointAutoConfiguration

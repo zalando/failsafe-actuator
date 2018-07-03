@@ -1,4 +1,4 @@
-package org.zalando.failsafeactuator;
+package org.zalando.actuate.failsafe;
 
 import net.jodah.failsafe.CircuitBreaker;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
@@ -17,7 +17,7 @@ public class CircuitBreakersEndpoint {
 
     private final Map<String, CircuitBreaker> breakers;
 
-    CircuitBreakersEndpoint(final Map<String, CircuitBreaker> breakers) {
+    public CircuitBreakersEndpoint(final Map<String, CircuitBreaker> breakers) {
         this.breakers = breakers;
     }
 

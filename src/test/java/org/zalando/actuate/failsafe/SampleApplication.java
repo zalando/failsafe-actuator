@@ -1,4 +1,4 @@
-package org.zalando.failsafeactuator;
+package org.zalando.actuate.failsafe;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -22,9 +22,11 @@ public class CircuitBreakersEndpoint {
     }
 
     @ReadOperation
-    public Map<String, CircuitBreakerView> circuitBreakers() {
-        return breakers.entrySet().stream()
+    public Container circuitBreakers() {
+        final Map<String, CircuitBreakerView> circuitBreakers = breakers.entrySet().stream()
                 .collect(toMap(Map.Entry::getKey, entry -> toView(entry.getValue())));
+
+        return new Container(circuitBreakers);
     }
 
     @ReadOperation

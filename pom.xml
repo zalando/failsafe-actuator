@@ -6,7 +6,7 @@
 
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>0.6.1-sb2</version>
+    <version>1.0.0</version>
 
     <name>Failsafe-Actuator</name>
     <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>

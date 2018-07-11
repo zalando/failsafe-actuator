@@ -1,31 +1,31 @@
-package org.zalando.failsafeactuator.sample;
+package org.zalando.actuate.failsafe;
 
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.zalando.failsafeactuator.service.FailsafeBreaker;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-@RestController
+@Controller
+@ResponseBody
 public class SampleController {
-    private boolean shouldFail = false;
+
+    private final AtomicBoolean fail = new AtomicBoolean();
 
     @Autowired
-    @Qualifier("testBreaker")
-    private CircuitBreaker breaker;
+    private CircuitBreaker test;
 
     @Autowired
-    @Qualifier("delayBreaker")
-    private CircuitBreaker delayBreaker;
+    private CircuitBreaker delay;
 
     @PostConstruct
     private void init() {
-        delayBreaker.withDelay(5, TimeUnit.SECONDS);
+        delay.withDelay(5, TimeUnit.SECONDS);
     }
 
     @RequestMapping("/unreliable")
@@ -35,21 +35,21 @@ public class SampleController {
 
     @RequestMapping("/reliable")
     public String sayHelloWorldReliable() {
-        return Failsafe.with(breaker).withFallback("Service unavailable").get(this::getMessage);
+        return Failsafe.with(test).withFallback("Service unavailable").get(this::getMessage);
     }
 
     @RequestMapping("/reliableWithDelay")
     public String sayHelloWorldReliableWithDelay() {
-        return Failsafe.with(delayBreaker).withFallback("Service unavailable").get(this::getMessage);
+        return Failsafe.with(delay).withFallback("Service unavailable").get(this::getMessage);
     }
 
     private String getMessage() {
-        if (shouldFail) {
-            shouldFail = false;
+        if (fail.compareAndSet(true, false)) {
             throw new RuntimeException("Every second try fails");
-        } else {
-            shouldFail = true;
+        } else if (fail.compareAndSet(false, true)) {
             return "Hello world!";
+        } else {
+            throw new IllegalStateException();
         }
     }
 }

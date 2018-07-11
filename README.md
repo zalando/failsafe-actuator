@@ -29,7 +29,7 @@ Unless you explicitly state otherwise in advance, any non trivial contribution i
 
 ### Dependencies/Requirements
 * Java 8
-* [Spring Boot](http://projects.spring.io/spring-boot/) 
+* [Spring Boot 2](http://projects.spring.io/spring-boot/) 
 * [Failsafe](https://github.com/jhalterman/failsafe)
 
 ### Running/Using
@@ -46,7 +46,7 @@ compile("org.zalando:failsafe-actuator:${FAILSAFE-ACTUATOR-VERSION}")
 <dependency>
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>${FAILSAFE-ACTUATOR-VERSION}</version>
+    <version>${failsafe-actuator.version}</version>
 </dependency>
 ```
 
@@ -55,8 +55,8 @@ Create your `CircuitBreaker` by defining them as a `Bean`.
 ```java
 @Configuration
 public class CircuitBreakerConfiguration {
-  @Bean("WhatABreak")
-  public CircuitBreaker createBreaker() {
+  @Bean
+  public CircuitBreaker myBreaker() {
     return new CircuitBreaker();
   }
 }
@@ -68,30 +68,60 @@ You can use and configure the created `CircuitBreaker` by autowiring it in the c
 ```java
 @Component
 public class MyBean {
-        @Autowired
-        @Qualifier(value = "WhatABreak")
-        private CircuitBreaker breaker;
+    @Autowired
+    private CircuitBreaker myBreaker;
 }
 ```
 
-That's it. By calling the [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) via _**http://${yourAddress}/failsafe**_.
+That's it. By calling the [endpoint](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html) via _**http://${yourAddress}/actuator/circuit-breakers**_.
 you will get a response which looks like the following:
 
 
-```json
+```http
+GET /actuator/circuit-breakers
+
+HTTP/1.1 200
+Content-Type: application/json
+
 {
-  "WhatABreak": {
-    "name": "WhatABreak",
+  "myBreaker": {
     "state": "OPEN"
+  },
+  "otherBreaker": {
+    "state": "CLOSED"
   }
+}
+```
+
+Individual circuit breakers can be requested via `/acutuator/circuit-breakers/{name}`:
+
+```http
+GET /actuator/circuit-breakers/myBreaker
+
+HTTP/1.1 200
+Content-Type: application/json
+
+{
+  "state": "OPEN"
+}
+```
+
+You can even modify the circuit breaker state and manually open or close them:
+
+```http
+POST /actuator/circuit-breakers/myBreaker
+Content-Type: application/json
+
+{
+  "state": "CLOSED"
 }
 ```
 
 ## Example usage
 
 To see a complete example on how to use the library take a look at the
-[Sample Application](src/test/java/org/zalando/failsafeactuator/sample/SampleApplication.java).
-It starts a [Rest Controller](src/test/java/org/zalando/failsafeactuator/sample/SampleController.java)
+[Sample Application](src/test/java/org/zalando/failsafeactuator/SampleApplication.java).
+It starts a [Rest Controller](src/test/java/org/zalando/failsafeactuator/SampleController.java)
 that shows how to autowire `CircuitBreaker` into your application
 and configure them.
 

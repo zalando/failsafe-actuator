@@ -6,7 +6,7 @@
 
     <groupId>org.zalando</groupId>
     <artifactId>failsafe-actuator</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>Failsafe-Actuator</name>
     <description>Failsafe-Actuator provides an out of the box endpoint for Failsafe</description>
@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+        <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
     </properties>
 
     <dependencies>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
+            <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

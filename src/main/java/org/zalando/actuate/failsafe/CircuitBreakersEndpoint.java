@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toMap;
 @Endpoint(id = "circuit-breakers")
 public class CircuitBreakersEndpoint {
 
-    private final Map<String, CircuitBreaker> breakers;
+    private final Map<String, CircuitBreaker> breakers = CollectionUtil.createMap();
 
     public CircuitBreakersEndpoint(final Map<String, CircuitBreaker> breakers) {
         this.breakers = breakers;
